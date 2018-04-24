@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../auth/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -10,28 +11,33 @@ import {AuthService} from "../auth/auth.service";
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
 
-  constructor(private _authService: AuthService) { }
+  constructor(private _authService: AuthService, private _router: Router) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
-      'userName' : new FormControl(null, [Validators.required]),
+      'username' : new FormControl(null, [Validators.required]),
       'password' : new FormControl(null, [Validators.required]),
       'secret' : new FormControl(null, [Validators.required])
     })
   }
 
-
   onRegisterSubmit(){
     const user = {
-      userName: this.registerForm.value.userName,
+      username: this.registerForm.value.username,
       password: this.registerForm.value.password,
       secret: this.registerForm.value.secret
     };
 
     if(user.secret === 'qqq'){
-      this._authService.onRegisterUser(user).subscribe((data) => console.log(data));
+      this._authService.onRegisterUser(user).subscribe((response) => {
+        console.log(response)
+        if(response['message'] === 'success') {
+          this._router.navigate(['/logadmin']);
+        }
+      });
     } else {
-      console.log(`Wrong secret`);
+      this._router.navigate(['/regadmin']);
+
     }
   }
 }

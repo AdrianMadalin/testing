@@ -15,4 +15,11 @@ export class AuthService {
     return this._httpClient.post(url,user,{headers}).map((res)=> res)
   }
 
+  onLoginUser(user){
+    const url = '/logadmin';
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    return this._httpClient.post(url,user,{headers}).map((res)=> res)
+  }
+
 }

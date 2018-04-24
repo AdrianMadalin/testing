@@ -228,6 +228,12 @@ var AuthService = /** @class */ (function () {
         headers.append('Content-Type', 'application/json');
         return this._httpClient.post(url, user, { headers: headers }).map(function (res) { return res; });
     };
+    AuthService.prototype.onLoginUser = function (user) {
+        var url = '/logadmin';
+        var headers = new http_1.HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        return this._httpClient.post(url, user, { headers: headers }).map(function (res) { return res; });
+    };
     AuthService = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [http_1.HttpClient])
@@ -392,14 +398,14 @@ exports.HomeComponent = HomeComponent;
 /***/ "./src/app/login/login.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".log-background{\r\n  background-color: #333;\r\n  height: 100vh;\r\n  width: 100%;\r\n}\r\n\r\n.form-center-vertical {\r\n  transform: translate(0%, 150%);\r\n  -webkit-transform: translate(0%, 150%);\r\n}\r\n"
 
 /***/ }),
 
 /***/ "./src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  login works!\n</p>\n"
+module.exports = "<div class=\"log-background\">\n  <div class=\"offset-4 col-lg-4 form-center-vertical\">\n    <form  [formGroup]=\"loginForm\" (ngSubmit)=\"onLoginSubmit()\">\n      <div class=\"form-group\">\n        <label for=\"logUsername\" class=\"text-light\">Username</label>\n        <input type=\"text\"\n               class=\"form-control\"\n               id=\"logUsername\" aria-describedby=\"emailHelp\"\n               placeholder=\"Username\" autocomplete=\"false\"\n               formControlName=\"username\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"logPassword\" class=\"text-light\">Password</label>\n        <input type=\"password\"\n               class=\"form-control\"\n               id=\"logPassword\"\n               placeholder=\"Password\"\n               formControlName=\"password\">\n      </div>\n      <div class=\"text-center\">\n        <button type=\"submit\" class=\"btn btn-primary\">Login</button>\n      </div>\n    </form>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -419,10 +425,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 var LoginComponent = /** @class */ (function () {
     function LoginComponent() {
     }
     LoginComponent.prototype.ngOnInit = function () {
+        this.loginForm = new forms_1.FormGroup({
+            "username": new forms_1.FormControl(null, [forms_1.Validators.required]),
+            "password": new forms_1.FormControl(null, [forms_1.Validators.required])
+        });
+    };
+    LoginComponent.prototype.onLoginSubmit = function () {
     };
     LoginComponent = __decorate([
         core_1.Component({
@@ -449,7 +462,7 @@ module.exports = ".reg-background{\r\n  background-color: #333;\r\n  height: 100
 /***/ "./src/app/register/register.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"reg-background\">\n  <div class=\"offset-4 col-lg-4 form-center-vertical\">\n    <form  [formGroup]=\"registerForm\" (ngSubmit)=\"onRegisterSubmit()\">\n      <div class=\"form-group\">\n        <label for=\"regUsername\" class=\"text-light\">Username</label>\n        <input type=\"text\"\n               class=\"form-control\"\n               id=\"regUsername\" aria-describedby=\"emailHelp\"\n               placeholder=\"Username\" autocomplete=\"false\"\n               formControlName=\"userName\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"regPassword\" class=\"text-light\">Password</label>\n        <input type=\"password\"\n               class=\"form-control\"\n               id=\"regPassword\"\n               placeholder=\"Password\"\n               formControlName=\"password\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"regSecret\" class=\"text-light\">Password</label>\n        <input type=\"password\"\n               class=\"form-control\"\n               id=\"regSecret\"\n               placeholder=\"Secret\"\n               formControlName=\"secret\">\n      </div>\n      <div class=\"text-center\">\n        <button type=\"submit\" class=\"btn btn-primary\">Register</button>\n      </div>\n    </form>\n  </div>\n</div>\n\n\n\n"
+module.exports = "<div class=\"reg-background\">\n  <div class=\"offset-4 col-lg-4 form-center-vertical\">\n    <form  [formGroup]=\"registerForm\" (ngSubmit)=\"onRegisterSubmit()\">\n      <div class=\"form-group\">\n        <label for=\"regUsername\" class=\"text-light\">Username</label>\n        <input type=\"text\"\n               class=\"form-control\"\n               id=\"regUsername\" aria-describedby=\"emailHelp\"\n               placeholder=\"Username\" autocomplete=\"false\"\n               formControlName=\"username\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"regPassword\" class=\"text-light\">Password</label>\n        <input type=\"password\"\n               class=\"form-control\"\n               id=\"regPassword\"\n               placeholder=\"Password\"\n               formControlName=\"password\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"regSecret\" class=\"text-light\">Secret</label>\n        <input type=\"password\"\n               class=\"form-control\"\n               id=\"regSecret\"\n               placeholder=\"Secret\"\n               formControlName=\"secret\">\n      </div>\n      <div class=\"text-center\">\n        <button type=\"submit\" class=\"btn btn-primary\">Register</button>\n      </div>\n    </form>\n  </div>\n</div>\n\n\n\n"
 
 /***/ }),
 
@@ -471,28 +484,36 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 var auth_service_1 = __webpack_require__("./src/app/auth/auth.service.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var RegisterComponent = /** @class */ (function () {
-    function RegisterComponent(_authService) {
+    function RegisterComponent(_authService, _router) {
         this._authService = _authService;
+        this._router = _router;
     }
     RegisterComponent.prototype.ngOnInit = function () {
         this.registerForm = new forms_1.FormGroup({
-            'userName': new forms_1.FormControl(null, [forms_1.Validators.required]),
+            'username': new forms_1.FormControl(null, [forms_1.Validators.required]),
             'password': new forms_1.FormControl(null, [forms_1.Validators.required]),
             'secret': new forms_1.FormControl(null, [forms_1.Validators.required])
         });
     };
     RegisterComponent.prototype.onRegisterSubmit = function () {
+        var _this = this;
         var user = {
-            userName: this.registerForm.value.userName,
+            username: this.registerForm.value.username,
             password: this.registerForm.value.password,
             secret: this.registerForm.value.secret
         };
         if (user.secret === 'qqq') {
-            this._authService.onRegisterUser(user).subscribe(function (data) { return console.log(data); });
+            this._authService.onRegisterUser(user).subscribe(function (response) {
+                console.log(response);
+                if (response['message'] === 'success') {
+                    _this._router.navigate(['/logadmin']);
+                }
+            });
         }
         else {
-            console.log("Wrong secret");
+            this._router.navigate(['/regadmin']);
         }
     };
     RegisterComponent = __decorate([
@@ -501,7 +522,7 @@ var RegisterComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/register/register.component.html"),
             styles: [__webpack_require__("./src/app/register/register.component.css")]
         }),
-        __metadata("design:paramtypes", [auth_service_1.AuthService])
+        __metadata("design:paramtypes", [auth_service_1.AuthService, router_1.Router])
     ], RegisterComponent);
     return RegisterComponent;
 }());

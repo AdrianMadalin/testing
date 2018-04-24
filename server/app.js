@@ -5,10 +5,22 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const mongoose = require('mongoose');
+
+const apiRoutes = require('./routes/api-routes');
 
 const app = express();
 
-const apiRoutes = require('./routes/api-routes');
+//connect to database
+const userName = 'kidso';
+const password = '123';
+const connectToDb = mongoose.connect(`mongodb://${userName}:${password}@ds253959.mlab.com:53959/kidso`);
+connectToDb.then(() => {
+    console.log('Connected to the database');
+}, (err) =>{
+    console.log(`Error connecting to the database`);
+    console.log(err);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

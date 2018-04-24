@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const UserModel = require('../models/userModel');
-const bcrypt = require('bcrypt');
 const Util = require('../utils/utils');
 
 router.post('/regadmin', (req, res) => {
@@ -25,6 +24,22 @@ router.post('/regadmin', (req, res) => {
             }
         });
     }
+});
+
+router.post('/logadmin', (req, res) => {
+    UserModel.findUserByName(req.body.username, (err, user)=>{
+        if (err) {
+            res.send({
+                message: `error`,
+                error: err
+            })
+        } else {
+            res.send({
+                message: `success`,
+                body: user
+            })
+        }
+    })
 });
 
 module.exports = router;

@@ -14,10 +14,18 @@ const userSchema = new mongoose.Schema({
 
 const User = module.exports = mongoose.model('User', userSchema);
 
+module.exports.findUserById = (id, callback) => {
+  User.findById(id,callback);
+};
+
+module.exports.findUserByName = (username, callback) =>{
+  User.findOne({username}, callback);
+};
+
 module.exports.addUser = (newUser, callback) => {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if(err){
+            if (err) {
                 throw err
             } else {
                 newUser.password = hash;
@@ -25,4 +33,14 @@ module.exports.addUser = (newUser, callback) => {
             }
         });
     })
+};
+
+module.exports.comparePassword = (inputPassword, hash, callback) => {
+    bcrypt.compare(inputPassword, hash, (err, isMatch) => {
+        if (err) {
+            throw err;
+        } else {
+            callback(null, isMatch);
+        }
+    });
 };

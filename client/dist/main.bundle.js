@@ -405,7 +405,7 @@ module.exports = ".log-background{\r\n  background-color: #333;\r\n  height: 100
 /***/ "./src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"log-background\">\n  <div class=\"offset-4 col-lg-4 form-center-vertical\">\n    <form  [formGroup]=\"loginForm\" (ngSubmit)=\"onLoginSubmit()\">\n      <div class=\"form-group\">\n        <label for=\"logUsername\" class=\"text-light\">Username</label>\n        <input type=\"text\"\n               class=\"form-control\"\n               id=\"logUsername\" aria-describedby=\"emailHelp\"\n               placeholder=\"Username\" autocomplete=\"false\"\n               formControlName=\"username\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"logPassword\" class=\"text-light\">Password</label>\n        <input type=\"password\"\n               class=\"form-control\"\n               id=\"logPassword\"\n               placeholder=\"Password\"\n               formControlName=\"password\">\n      </div>\n      <div class=\"text-center\">\n        <button type=\"submit\" class=\"btn btn-primary\">Login</button>\n      </div>\n    </form>\n  </div>\n</div>\n"
+module.exports = "<div class=\"log-background\">\n  <div class=\"offset-4 col-lg-4 form-center-vertical\">\n    <div class=\"text-center text-light\">LOGIN</div>\n    <form  [formGroup]=\"loginForm\" (ngSubmit)=\"onLoginSubmit()\">\n      <div class=\"form-group\">\n        <label for=\"logUsername\" class=\"text-light\">Username</label>\n        <input type=\"text\"\n               class=\"form-control\"\n               id=\"logUsername\" aria-describedby=\"emailHelp\"\n               placeholder=\"Username\" autocomplete=\"false\"\n               formControlName=\"username\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"logPassword\" class=\"text-light\">Password</label>\n        <input type=\"password\"\n               class=\"form-control\"\n               id=\"logPassword\"\n               placeholder=\"Password\"\n               formControlName=\"password\">\n      </div>\n      <div class=\"text-center\">\n        <button type=\"submit\" class=\"btn btn-primary\">Login</button>\n      </div>\n    </form>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -426,8 +426,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
+var auth_service_1 = __webpack_require__("./src/app/auth/auth.service.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var LoginComponent = /** @class */ (function () {
-    function LoginComponent() {
+    function LoginComponent(_authService, _router) {
+        this._authService = _authService;
+        this._router = _router;
     }
     LoginComponent.prototype.ngOnInit = function () {
         this.loginForm = new forms_1.FormGroup({
@@ -436,6 +440,13 @@ var LoginComponent = /** @class */ (function () {
         });
     };
     LoginComponent.prototype.onLoginSubmit = function () {
+        var user = {
+            username: this.loginForm.value.username,
+            password: this.loginForm.value.password,
+        };
+        this._authService.onLoginUser(user).subscribe(function (response) {
+            console.log(response);
+        });
     };
     LoginComponent = __decorate([
         core_1.Component({
@@ -443,7 +454,8 @@ var LoginComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/login/login.component.html"),
             styles: [__webpack_require__("./src/app/login/login.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [auth_service_1.AuthService,
+            router_1.Router])
     ], LoginComponent);
     return LoginComponent;
 }());

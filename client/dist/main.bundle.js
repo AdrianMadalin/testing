@@ -20,14 +20,14 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /***/ "./src/app/app.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "agm-map {\r\n  height: 400px;\r\n}\r\n\r\n/*.container {*/\r\n\r\n/*clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);*/\r\n\r\n/*}*/\r\n"
+module.exports = ""
 
 /***/ }),
 
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--<div class=\"container\">-->\r\n  <!--<agm-map [latitude]=\"latitude\" [longitude]=\"longitude\" [zoom]=\"18\" (mapClick)=\"onChoseLocation($event)\">-->\r\n    <!--<agm-marker [latitude]=\"latitude\" [longitude]=\"longitude\" [label]=\"'home'\" [title]=\"'jkdlaskldksald'\"></agm-marker>-->\r\n  <!--</agm-map>-->\r\n<!--</div>-->\r\n\r\n<!--<div class=\"container2\">-->\r\n  <!--<input type=\"file\"-->\r\n         <!--(change)=\"onFileSelected($event)\"-->\r\n         <!--#fileInput>-->\r\n  <!--<button type=\"button\" (click)=\"onUpload()\">Upload</button>-->\r\n<!--</div>-->\r\n\r\n<router-outlet></router-outlet>\r\n"
+module.exports = "<router-outlet></router-outlet>\r\n"
 
 /***/ }),
 
@@ -47,50 +47,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var AppComponent = /** @class */ (function () {
-    function AppComponent(_httpClient) {
-        this._httpClient = _httpClient;
-        this.title = 'app';
-        this.latitude = 44.459417;
-        this.longitude = 26.075994;
-        this.selectedFile = null;
+    function AppComponent() {
     }
-    AppComponent.prototype.onChoseLocation = function (e) {
-        console.log(e);
-    };
-    AppComponent.prototype.onFileSelected = function (event) {
-        console.log(event);
-        console.log(event.target.files);
-        this.selectedFile = event.target.files[0];
-        console.log(this.selectedFile);
-    };
-    AppComponent.prototype.onUpload = function () {
-        var url = '/hit';
-        var fd = new FormData();
-        fd.append('image', this.selectedFile, this.selectedFile.name);
-        this._httpClient.post(url, fd, {
-            reportProgress: true,
-            observe: 'events'
-        }).subscribe(function (event) {
-            if (event.type === http_1.HttpEventType.UploadProgress) {
-                console.log("Upload progress " + Math.round(event.loaded / event.total * 100) + "%");
-            }
-            else if (event.type === http_1.HttpEventType.Response) {
-                console.log(event);
-            }
-            else {
-                // console.log(event);
-            }
-        });
-    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app-root',
             template: __webpack_require__("./src/app/app.component.html"),
             styles: [__webpack_require__("./src/app/app.component.css")]
         }),
-        __metadata("design:paramtypes", [http_1.HttpClient])
+        __metadata("design:paramtypes", [])
     ], AppComponent);
     return AppComponent;
 }());
@@ -125,6 +91,8 @@ var login_component_1 = __webpack_require__("./src/app/login/login.component.ts"
 var register_component_1 = __webpack_require__("./src/app/register/register.component.ts");
 var auth_service_1 = __webpack_require__("./src/app/auth/auth.service.ts");
 var jwtHelper_service_1 = __webpack_require__("./src/app/auth/jwtHelper.service.ts");
+var contact_component_1 = __webpack_require__("./src/app/contact/contact.component.ts");
+var gallery_component_1 = __webpack_require__("./src/app/gallery/gallery.component.ts");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -136,7 +104,9 @@ var AppModule = /** @class */ (function () {
                 header_component_1.HeaderComponent,
                 footer_component_1.FooterComponent,
                 login_component_1.LoginComponent,
-                register_component_1.RegisterComponent
+                register_component_1.RegisterComponent,
+                contact_component_1.ContactComponent,
+                gallery_component_1.GalleryComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -176,10 +146,14 @@ var home_component_1 = __webpack_require__("./src/app/home/home.component.ts");
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var login_component_1 = __webpack_require__("./src/app/login/login.component.ts");
 var register_component_1 = __webpack_require__("./src/app/register/register.component.ts");
+var contact_component_1 = __webpack_require__("./src/app/contact/contact.component.ts");
+var gallery_component_1 = __webpack_require__("./src/app/gallery/gallery.component.ts");
 var appRoutes = [
     { path: '', component: home_component_1.HomeComponent, pathMatch: 'full' },
     { path: 'logadmin', component: login_component_1.LoginComponent },
     { path: 'regadmin', component: register_component_1.RegisterComponent },
+    { path: 'galerie', component: gallery_component_1.GalleryComponent },
+    { path: 'contact', component: contact_component_1.ContactComponent }
 ];
 var AppRoutesModule = /** @class */ (function () {
     function AppRoutesModule() {
@@ -248,7 +222,14 @@ var AuthService = /** @class */ (function () {
             return localStorage.getItem('id_token');
         }
         else
-            return '';
+            return;
+    };
+    AuthService.prototype.getUser = function () {
+        if (localStorage.getItem('user')) {
+            return JSON.parse(localStorage.getItem('user'));
+        }
+        else
+            return;
     };
     AuthService = __decorate([
         core_1.Injectable(),
@@ -370,6 +351,61 @@ exports.JwtHelper = JwtHelper;
 
 /***/ }),
 
+/***/ "./src/app/contact/contact.component.css":
+/***/ (function(module, exports) {
+
+module.exports = "agm-map {\r\n  height: 400px;\r\n}\r\n\r\n.c1 {\r\n  /*clip-path: polygon(38% 15%, 71% 14%, 91% 57%, 76% 60%, 65% 40%, 59% 60%, 48% 41%, 41% 57%, 24% 56%);*/\r\n}\r\n"
+
+/***/ }),
+
+/***/ "./src/app/contact/contact.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<app-header></app-header>\n\n<div class=\"container c1\">\n  <agm-map\n    [latitude]=\"latitude\"\n    [longitude]=\"longitude\"\n    [zoom]=\"18\"\n    (mapClick)=\"onChoseLocation($event)\">\n    <agm-marker\n      [latitude]=\"latitude\"\n      [longitude]=\"longitude\"\n      [label]=\"'location'\"\n      [title]=\"'myLocation'\">\n    </agm-marker>\n  </agm-map>\n</div>\n\n\n<app-footer></app-footer>\n"
+
+/***/ }),
+
+/***/ "./src/app/contact/contact.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var ContactComponent = /** @class */ (function () {
+    function ContactComponent() {
+        this.latitude = 44.459417;
+        this.longitude = 26.075994;
+    }
+    ContactComponent.prototype.ngOnInit = function () {
+    };
+    ContactComponent.prototype.onChoseLocation = function (e) {
+        console.log(e);
+    };
+    ContactComponent = __decorate([
+        core_1.Component({
+            selector: 'app-contact',
+            template: __webpack_require__("./src/app/contact/contact.component.html"),
+            styles: [__webpack_require__("./src/app/contact/contact.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], ContactComponent);
+    return ContactComponent;
+}());
+exports.ContactComponent = ContactComponent;
+
+
+/***/ }),
+
 /***/ "./src/app/footer/footer.component.css":
 /***/ (function(module, exports) {
 
@@ -380,7 +416,7 @@ module.exports = ""
 /***/ "./src/app/footer/footer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar fixed-bottom navbar-light bg-info\">\r\n  <a class=\"navbar-brand\" href=\"#\">Fixed bottom</a>\r\n</nav>\r\n"
+module.exports = "<footer>\n  <div class=\"text-center\">\n    <p class=\"text-white\">FOOTER</p>\n  </div>\n</footer>\n"
 
 /***/ }),
 
@@ -420,6 +456,83 @@ exports.FooterComponent = FooterComponent;
 
 /***/ }),
 
+/***/ "./src/app/gallery/gallery.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/gallery/gallery.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<app-header></app-header>\n\n<div class=\"container\">\n  <h3>Galerie component</h3>\n  <div class=\"container2\">\n    <input type=\"file\"\n           (change)=\"onFileSelected($event)\"\n           #fileInput>\n    <button type=\"button\" (click)=\"onUpload()\">Upload</button>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">\n      <img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">\n    </div>\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">\n      <img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">\n    </div>\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">\n      <img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">\n    </div>\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">\n      <img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">\n    </div>\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">\n      <img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">\n    </div>\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">\n      <img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">\n    </div>\n  </div>\n</div>\n\n<app-footer></app-footer>\n"
+
+/***/ }),
+
+/***/ "./src/app/gallery/gallery.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var GalleryComponent = /** @class */ (function () {
+    function GalleryComponent(_httpClient) {
+        this._httpClient = _httpClient;
+        this.selectedFile = null;
+    }
+    GalleryComponent.prototype.ngOnInit = function () {
+    };
+    GalleryComponent.prototype.onFileSelected = function (event) {
+        console.log(event.target.files);
+        this.selectedFile = event.target.files[0];
+        console.log(this.selectedFile);
+    };
+    GalleryComponent.prototype.onUpload = function () {
+        var url = '/test';
+        var fd = new FormData();
+        fd.append('image', this.selectedFile, this.selectedFile.name);
+        this._httpClient.post(url, fd, {
+            reportProgress: true,
+            observe: 'events'
+        }).subscribe(function (event) {
+            if (event.type === http_1.HttpEventType.UploadProgress) {
+                console.log("Upload progress " + Math.round(event.loaded / event.total * 100) + "%");
+            }
+            else if (event.type === http_1.HttpEventType.Response) {
+                console.log(event);
+            }
+            else {
+                // console.log(event);
+            }
+        });
+    };
+    GalleryComponent = __decorate([
+        core_1.Component({
+            selector: 'app-gallery',
+            template: __webpack_require__("./src/app/gallery/gallery.component.html"),
+            styles: [__webpack_require__("./src/app/gallery/gallery.component.css")]
+        }),
+        __metadata("design:paramtypes", [http_1.HttpClient])
+    ], GalleryComponent);
+    return GalleryComponent;
+}());
+exports.GalleryComponent = GalleryComponent;
+
+
+/***/ }),
+
 /***/ "./src/app/header/header.component.css":
 /***/ (function(module, exports) {
 
@@ -430,7 +543,7 @@ module.exports = ""
 /***/ "./src/app/header/header.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\r\n  <a class=\"navbar-brand\" href=\"#\">Brand</a>\r\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\"\r\n          aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n    <span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n\r\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\r\n    <ul class=\"navbar-nav ml-auto\">\r\n      <li class=\"nav-item active\">\r\n        <a class=\"nav-link\" href=\"#\">Home <span class=\"sr-only\">(current)</span></a>\r\n      </li>\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" href=\"#\">Link</a>\r\n      </li>\r\n      <li class=\"nav-item dropdown\">\r\n        <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\"\r\n           aria-haspopup=\"true\" aria-expanded=\"false\">\r\n          Dropdown\r\n        </a>\r\n        <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\r\n          <a class=\"dropdown-item\" href=\"#\">Action</a>\r\n          <a class=\"dropdown-item\" href=\"#\">Another action</a>\r\n          <div class=\"dropdown-divider\"></div>\r\n          <a class=\"dropdown-item\" href=\"#\">Something else here</a>\r\n        </div>\r\n      </li>\r\n    </ul>\r\n  </div>\r\n</nav>\r\n"
+module.exports = "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\n  <a class=\"navbar-brand\" href=\"#\">Brand</a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\"\n          aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav ml-auto\">\n      <li class=\"nav-item active\">\n        <a class=\"nav-link\" routerLink=\"/\" routerLinkActive=\"active\">Home <span class=\"sr-only\">(current)</span></a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/contact\">Contact</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/galerie\">Galerie</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/logadmin\">Login</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/regadmin\">Register</a>\n      </li>\n      <li class=\"nav-item\" *ngIf=\"user !== undefined\">{{user.username}}</li>\n    </ul>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -450,10 +563,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var auth_service_1 = __webpack_require__("./src/app/auth/auth.service.ts");
 var HeaderComponent = /** @class */ (function () {
-    function HeaderComponent() {
+    function HeaderComponent(_authService) {
+        this._authService = _authService;
+        this.user = {};
     }
     HeaderComponent.prototype.ngOnInit = function () {
+        if (this._authService.getUser() !== undefined) {
+            this.user = this._authService.getUser();
+            console.log(this.user);
+        }
     };
     HeaderComponent = __decorate([
         core_1.Component({
@@ -461,7 +581,7 @@ var HeaderComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/header/header.component.html"),
             styles: [__webpack_require__("./src/app/header/header.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [auth_service_1.AuthService])
     ], HeaderComponent);
     return HeaderComponent;
 }());
@@ -480,7 +600,7 @@ module.exports = ""
 /***/ "./src/app/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\r\n\r\n<div class=\"container\">\r\n  <p id=\"one\">Home Component</p>\r\n  <a routerLink=\"/regadmin\">Register</a>\r\n  <br>\r\n  <a routerLink=\"/logadmin\">Login</a>\r\n</div>\r\n\r\n<app-footer></app-footer>\r\n"
+module.exports = "<app-header></app-header>\r\n\r\n<div class=\"container\">\r\n  <h3 id=\"one\">Home Component</h3>\r\n</div>\r\n\r\n<app-footer></app-footer>\r\n"
 
 /***/ }),
 
@@ -502,7 +622,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var jwtHelper_service_1 = __webpack_require__("./src/app/auth/jwtHelper.service.ts");
 var auth_service_1 = __webpack_require__("./src/app/auth/auth.service.ts");
-var $ = __webpack_require__("./node_modules/jquery/dist/jquery.js");
 var HomeComponent = /** @class */ (function () {
     function HomeComponent(_jwtHelper, _authService) {
         this._jwtHelper = _jwtHelper;
@@ -511,11 +630,8 @@ var HomeComponent = /** @class */ (function () {
         this.token = '';
     }
     HomeComponent.prototype.ngOnInit = function () {
-        this.token = this._authService.getToken();
-        this.token.length <= 0 ? this.isValidToken = true : this.isValidToken = false;
-        console.log(this.isValidToken);
-        console.log(this._jwtHelper.isTokenExpired(this.token.split(' ')[1]));
-        $('#one').css('color', 'red');
+        // this.token = this._authService.getToken();
+        // this.token.length <= 0 ? this.isValidToken = true : this.isValidToken = false;
     };
     HomeComponent = __decorate([
         core_1.Component({
@@ -536,14 +652,14 @@ exports.HomeComponent = HomeComponent;
 /***/ "./src/app/login/login.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ".log-background{\r\n  background-color: #333;\r\n  height: 100vh;\r\n  width: 100%;\r\n}\r\n\r\n.form-center-vertical {\r\n  transform: translate(0%, 150%);\r\n  -webkit-transform: translate(0%, 150%);\r\n}\r\n"
+module.exports = ".log-background{\r\n  position: fixed;\r\n  width: 100%;\r\n  height: 100%;\r\n  left: 0;\r\n  top: 0;\r\n  background-color: #333;\r\n  z-index: 10;\r\n}\r\n\r\n.form-center-vertical {\r\n  position: absolute;\r\n  width: 30%;\r\n  left: 50%;\r\n  top: 50%;\r\n  transform: translate(-50%, -50%);\r\n  -webkit-transform: translate(-50%, -50%);\r\n}\r\n"
 
 /***/ }),
 
 /***/ "./src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"log-background\">\r\n  <div class=\"offset-4 col-lg-4 form-center-vertical\">\r\n    <div class=\"text-center text-light\">LOGIN</div>\r\n    <form  [formGroup]=\"loginForm\" (ngSubmit)=\"onLoginSubmit()\">\r\n      <div class=\"form-group\">\r\n        <label for=\"logUsername\" class=\"text-light\">Username</label>\r\n        <input type=\"text\"\r\n               class=\"form-control\"\r\n               id=\"logUsername\" aria-describedby=\"emailHelp\"\r\n               placeholder=\"Username\" autocomplete=\"false\"\r\n               formControlName=\"username\">\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label for=\"logPassword\" class=\"text-light\">Password</label>\r\n        <input type=\"password\"\r\n               class=\"form-control\"\r\n               id=\"logPassword\"\r\n               placeholder=\"Password\"\r\n               formControlName=\"password\">\r\n      </div>\r\n      <div class=\"text-center\">\r\n        <button type=\"submit\" class=\"btn btn-primary\">Login</button>\r\n      </div>\r\n    </form>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"log-background\">\n  <div class=\"form-center-vertical\">\n    <div class=\"text-center text-light\">LOGIN</div>\n    <form  [formGroup]=\"loginForm\" (ngSubmit)=\"onLoginSubmit()\">\n      <div class=\"form-group\">\n        <label for=\"logUsername\" class=\"text-light\">Username</label>\n        <input type=\"text\"\n               class=\"form-control\"\n               id=\"logUsername\" aria-describedby=\"emailHelp\"\n               placeholder=\"Username\" autocomplete=\"false\"\n               formControlName=\"username\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"logPassword\" class=\"text-light\">Password</label>\n        <input type=\"password\"\n               class=\"form-control\"\n               id=\"logPassword\"\n               placeholder=\"Password\"\n               formControlName=\"password\">\n      </div>\n      <div class=\"text-center\">\n        <button type=\"submit\" class=\"btn btn-primary\">Login</button>\n      </div>\n    </form>\n    <div>\n      <div class=\"separate-btn\">\n       <a routerLink=\"/\"><i class=\"fas fa-home\"></i> Go home</a>\n       <a routerLink=\"/regadmin\">to Register <i class=\"fas fa-caret-square-right\"></i></a>\n     </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -584,6 +700,7 @@ var LoginComponent = /** @class */ (function () {
             password: this.loginForm.value.password,
         };
         this._authService.onLoginUser(user).subscribe(function (response) {
+            console.log(response);
             _this._authService.storeUserData(response['token'], response['user']);
             _this._router.navigate(['/']);
         });
@@ -607,14 +724,14 @@ exports.LoginComponent = LoginComponent;
 /***/ "./src/app/register/register.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ".reg-background{\r\n  background-color: #333;\r\n  height: 100vh;\r\n  width: 100%;\r\n}\r\n\r\n.form-center-vertical {\r\n  transform: translate(0%, 100%);\r\n  -webkit-transform: translate(0%, 100%);\r\n}\r\n"
+module.exports = ".reg-background{\r\n  position: fixed;\r\n  width: 100%;\r\n  height: 100%;\r\n  left: 0;\r\n  top: 0;\r\n  background-color: #333;\r\n  z-index: 10;\r\n}\r\n\r\n.form-center-vertical {\r\n  position: absolute;\r\n  width: 30%;\r\n  left: 50%;\r\n  top: 50%;\r\n  transform: translate(-50%, -50%);\r\n  -webkit-transform: translate(-50%, -50%);\r\n}\r\n"
 
 /***/ }),
 
 /***/ "./src/app/register/register.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"offset-4 col-lg-4 form-center-vertical\">\r\n  <form [formGroup]=\"registerForm\" (ngSubmit)=\"onRegisterSubmit()\">\r\n    <div class=\"form-group\">\r\n      <label for=\"regUsername\" class=\"text-light\">Username</label>\r\n      <input type=\"text\"\r\n             class=\"form-control\"\r\n             id=\"regUsername\" aria-describedby=\"emailHelp\"\r\n             placeholder=\"Username\" autocomplete=\"false\"\r\n             formControlName=\"username\">\r\n    </div>\r\n    <div class=\"form-group\">\r\n      <label for=\"regPassword\" class=\"text-light\">Password</label>\r\n      <input type=\"password\"\r\n             class=\"form-control\"\r\n             id=\"regPassword\"\r\n             placeholder=\"Password\"\r\n             formControlName=\"password\">\r\n    </div>\r\n    <div class=\"form-group\">\r\n      <label for=\"regSecret\" class=\"text-light\">Secret</label>\r\n      <input type=\"password\"\r\n             class=\"form-control\"\r\n             id=\"regSecret\"\r\n             placeholder=\"Secret\"\r\n             formControlName=\"secret\">\r\n    </div>\r\n    <div class=\"text-center\">\r\n      <button type=\"submit\" class=\"btn btn-primary\">Register</button>\r\n    </div>\r\n  </form>\r\n</div>\r\n\r\n\r\n\r\n"
+module.exports = "<div class=\"reg-background\">\r\n  <div class=\"form-center-vertical\">\r\n    <form [formGroup]=\"registerForm\" (ngSubmit)=\"onRegisterSubmit()\">\r\n      <div class=\"form-group\">\r\n        <label for=\"regUsername\" class=\"text-light\">Username</label>\r\n        <input type=\"text\"\r\n               class=\"form-control\"\r\n               id=\"regUsername\" aria-describedby=\"emailHelp\"\r\n               placeholder=\"Username\" autocomplete=\"false\"\r\n               formControlName=\"username\">\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label for=\"regPassword\" class=\"text-light\">Password</label>\r\n        <input type=\"password\"\r\n               class=\"form-control\"\r\n               id=\"regPassword\"\r\n               placeholder=\"Password\"\r\n               formControlName=\"password\">\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label for=\"regSecret\" class=\"text-light\">Secret</label>\r\n        <input type=\"password\"\r\n               class=\"form-control\"\r\n               id=\"regSecret\"\r\n               placeholder=\"Secret\"\r\n               formControlName=\"secret\">\r\n      </div>\r\n      <div class=\"text-center\">\r\n        <button type=\"submit\" class=\"btn btn-primary\">Register</button>\r\n      </div>\r\n    </form>\r\n    <div class=\"separate-btn\">\r\n      <a routerLink=\"/\"><i class=\"fas fa-home\"></i> Go home</a>\r\n      <a routerLink=\"/logadmin\">to Login <i class=\"fas fa-caret-square-right\"></i></a>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n\r\n\r\n"
 
 /***/ }),
 

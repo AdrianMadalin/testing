@@ -12,6 +12,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {AuthService} from "./auth/auth.service";
 import {JwtHelper} from "./auth/jwtHelper.service";
+import { ContactComponent } from './contact/contact.component';
+import { GalleryComponent } from './gallery/gallery.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import {JwtHelper} from "./auth/jwtHelper.service";
     HeaderComponent,
     FooterComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ContactComponent,
+    GalleryComponent
   ],
   imports: [
     BrowserModule,

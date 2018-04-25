@@ -1,5 +1,5 @@
 <div class="log-background">
-  <div class="offset-4 col-lg-4 form-center-vertical">
+  <div class="form-center-vertical">
     <div class="text-center text-light">LOGIN</div>
     <form  [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
       <div class="form-group">
@@ -22,5 +22,11 @@
         <button type="submit" class="btn btn-primary">Login</button>
       </div>
     </form>
+    <div>
+      <div class="separate-btn">
+       <a routerLink="/"><i class="fas fa-home"></i> Go home</a>
+       <a routerLink="/regadmin">to Register <i class="fas fa-caret-square-right"></i></a>
+     </div>
+    </div>
   </div>
 </div>

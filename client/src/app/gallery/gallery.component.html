@@ -1,0 +1,36 @@
+<app-header></app-header>
+
+<div class="container">
+  <h3>Galerie component</h3>
+  <div class="container2">
+    <input type="file"
+           (change)="onFileSelected($event)"
+           #fileInput>
+    <button type="button" (click)="onUpload()">Upload</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+      <img src="../../assets/images/DNS.jpg" alt="something" class="img-fluid">
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+      <img src="../../assets/images/DNS.jpg" alt="something" class="img-fluid">
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+      <img src="../../assets/images/DNS.jpg" alt="something" class="img-fluid">
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+      <img src="../../assets/images/DNS.jpg" alt="something" class="img-fluid">
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+      <img src="../../assets/images/DNS.jpg" alt="something" class="img-fluid">
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+      <img src="../../assets/images/DNS.jpg" alt="something" class="img-fluid">
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

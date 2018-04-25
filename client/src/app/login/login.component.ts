@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
     };
 
     this._authService.onLoginUser(user).subscribe((response)=>{
+      console.log(response);
       this._authService.storeUserData(response['token'], response['user']);
       this._router.navigate(['/']);
     })

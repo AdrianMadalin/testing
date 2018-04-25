@@ -1,0 +1,19 @@
+<app-header></app-header>
+
+<div class="container c1">
+  <agm-map
+    [latitude]="latitude"
+    [longitude]="longitude"
+    [zoom]="18"
+    (mapClick)="onChoseLocation($event)">
+    <agm-marker
+      [latitude]="latitude"
+      [longitude]="longitude"
+      [label]="'location'"
+      [title]="'myLocation'">
+    </agm-marker>
+  </agm-map>
+</div>
+
+
+<app-footer></app-footer>

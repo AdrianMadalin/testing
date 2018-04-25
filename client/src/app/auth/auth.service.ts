@@ -34,7 +34,13 @@ export class AuthService {
   getToken() {
     if(localStorage.getItem('id_token')){
       return localStorage.getItem('id_token');
-    } else return '';
+    } else return;
+  }
+
+  getUser() {
+    if(localStorage.getItem('user')){
+      return JSON.parse(localStorage.getItem('user'));
+    } else return;
   }
 
 }

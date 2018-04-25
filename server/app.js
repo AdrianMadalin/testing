@@ -10,6 +10,7 @@ const passport = require('passport');
 const config = require('./utils/config');
 
 const apiRoutes = require('./routes/api-routes');
+const apiUpload = require('./routes/api-upload');
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.use(apiRoutes);
+app.use(apiUpload);
 
 // Send all other requests to Angular app
 app.get('*', (req, res) => {

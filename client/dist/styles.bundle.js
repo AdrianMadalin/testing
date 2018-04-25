@@ -120,7 +120,7 @@ module.exports = "/*!\n * Bootstrap v4.1.0 (https://getbootstrap.com/)\n * Copyr
 /***/ "./node_modules/raw-loader/index.js!./node_modules/postcss-loader/lib/index.js??embedded!./src/styles.css":
 /***/ (function(module, exports) {
 
-module.exports = "/* You can add global styles to this file, and also import other style files */\r\n"
+module.exports = "/* You can add global styles to this file, and also import other style files */\n*,\n*::after,\n*::before {\n  margin: 0;\n  padding: 0;\n  -webkit-box-sizing: inherit;\n          box-sizing: inherit;\n}\nhtml {\n  height: 100%;\n}\nbody {\n  min-height: 100%;\n  padding: 0;\n  margin: 0;\n  position: relative;\n}\nbody::after {\n  content: '';\n  display: block;\n  height: 100px;\n}\nfooter {\n  position: absolute;\n  bottom: 0;\n  width: 100%;\n  height: 100px;\n  background-color: #343a40 !important;\n}\n.separate-btn {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n}\n"
 
 /***/ }),
 

@@ -6,15 +6,15 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const passport = require('passport');
+const config = require('./utils/config');
 
 const apiRoutes = require('./routes/api-routes');
 
 const app = express();
 
 //connect to database
-const userName = 'kidso';
-const password = '123';
-const connectToDb = mongoose.connect(`mongodb://${userName}:${password}@ds253959.mlab.com:53959/kidso`);
+const connectToDb = mongoose.connect(config.database);
 connectToDb.then(() => {
     console.log('Connected to the database');
 }, (err) =>{
@@ -33,6 +33,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 
+app.use(passport.initialize());
+app.use(passport.session());
+require('./utils/passport')(passport);
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');

@@ -11,6 +11,7 @@ import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {AuthService} from "./auth/auth.service";
+import {JwtHelper} from "./auth/jwtHelper.service";
 
 
 @NgModule({
@@ -32,7 +33,7 @@ import {AuthService} from "./auth/auth.service";
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService],
+  providers: [AuthService,JwtHelper],
   bootstrap: [AppComponent]
 })
 export class AppModule {

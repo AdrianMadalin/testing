@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const UserModel = require('../models/userModel');
 const Util = require('../utils/utils');
+const jwt = require('jsonwebtoken');
+const config = require('../utils/config');
 
 router.post('/regadmin', (req, res) => {
     if (req.body.secret === 'qqq') {
@@ -27,17 +29,45 @@ router.post('/regadmin', (req, res) => {
 });
 
 router.post('/logadmin', (req, res) => {
-    UserModel.findUserByName(req.body.username, (err, user)=>{
+    const username = req.body.username;
+    const password = req.body.password;
+
+    UserModel.findUserByName(username, (err, user) => {
         if (err) {
             res.send({
                 message: `error`,
                 error: err
             })
-        } else {
-            res.send({
-                message: `success`,
-                body: user
+        } else if (!user) {
+            return res.json({
+                success: false,
+                message: `user not found`
             })
+        } else {
+            UserModel.comparePassword(password, user.password, (err, isMatch) => {
+                if (err) {
+                    throw err;
+                }
+
+                if (isMatch) {
+                    const token = jwt.sign({data:user}, config.secret,{
+                        expiresIn: `30000` //30 secs
+                    });
+                    res.json({
+                        success: true,
+                        token: `Barrer ${token}`,
+                        user: {
+                            id: user._id,
+                            username: user.username
+                        }
+                    })
+                } else {
+                    return res.json({
+                        success: false,
+                        message: `wrong password`
+                    })
+                }
+            });
         }
     })
 });

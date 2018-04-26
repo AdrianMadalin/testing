@@ -13,7 +13,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     if(this._authService.getUser() !== undefined){
       this.user = this._authService.getUser()
-      console.log(this.user)
     }
   }
 

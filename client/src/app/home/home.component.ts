@@ -12,12 +12,14 @@ import * as $ from "jquery";
 export class HomeComponent implements OnInit {
   isValidToken: Boolean = false;
   token: String = '';
+  pathToImage: String = '';
 
   constructor(private _jwtHelper: JwtHelper,
               private _authService: AuthService) {
   }
 
   ngOnInit() {
+    this.pathToImage = '../../assets/images/carousel/';
     // this.token = this._authService.getToken();
     // this.token.length <= 0 ? this.isValidToken = true : this.isValidToken = false;
   }

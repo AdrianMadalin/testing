@@ -1,7 +1,9 @@
-agm-map {
-  height: 400px;
+.contact{
+  /*background-color: #64B5F6;*/
+  width: 100%;
+  height: 100%;
 }
 
-.c1 {
-  /*clip-path: polygon(38% 15%, 71% 14%, 91% 57%, 76% 60%, 65% 40%, 59% 60%, 48% 41%, 41% 57%, 24% 56%);*/
+agm-map {
+  height: 400px;
 }

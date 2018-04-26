@@ -7,20 +7,24 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="/" routerLinkActive="active">Home <span class="sr-only">(current)</span></a>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+true}">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/contact">Contact</a>
+        <a class="nav-link" routerLink="/oferte" routerLinkActive="active">Oferte</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/galerie">Galerie</a>
+        <a class="nav-link" routerLink="/galerie" routerLinkActive="active">Galerie</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/logadmin">Login</a>
+        <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/regadmin">Register</a>
+        <a class="nav-link" routerLink="/logadmin" routerLinkActive="active">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/regadmin" routerLinkActive="active">Register</a>
       </li>
       <li class="nav-item" *ngIf="user !== undefined">{{user.username}}</li>
     </ul>

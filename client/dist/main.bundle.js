@@ -93,6 +93,7 @@ var auth_service_1 = __webpack_require__("./src/app/auth/auth.service.ts");
 var jwtHelper_service_1 = __webpack_require__("./src/app/auth/jwtHelper.service.ts");
 var contact_component_1 = __webpack_require__("./src/app/contact/contact.component.ts");
 var gallery_component_1 = __webpack_require__("./src/app/gallery/gallery.component.ts");
+var deals_component_1 = __webpack_require__("./src/app/deals/deals.component.ts");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -106,7 +107,8 @@ var AppModule = /** @class */ (function () {
                 login_component_1.LoginComponent,
                 register_component_1.RegisterComponent,
                 contact_component_1.ContactComponent,
-                gallery_component_1.GalleryComponent
+                gallery_component_1.GalleryComponent,
+                deals_component_1.DealsComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,
@@ -148,10 +150,12 @@ var login_component_1 = __webpack_require__("./src/app/login/login.component.ts"
 var register_component_1 = __webpack_require__("./src/app/register/register.component.ts");
 var contact_component_1 = __webpack_require__("./src/app/contact/contact.component.ts");
 var gallery_component_1 = __webpack_require__("./src/app/gallery/gallery.component.ts");
+var deals_component_1 = __webpack_require__("./src/app/deals/deals.component.ts");
 var appRoutes = [
     { path: '', component: home_component_1.HomeComponent, pathMatch: 'full' },
     { path: 'logadmin', component: login_component_1.LoginComponent },
     { path: 'regadmin', component: register_component_1.RegisterComponent },
+    { path: 'oferte', component: deals_component_1.DealsComponent },
     { path: 'galerie', component: gallery_component_1.GalleryComponent },
     { path: 'contact', component: contact_component_1.ContactComponent }
 ];
@@ -354,14 +358,14 @@ exports.JwtHelper = JwtHelper;
 /***/ "./src/app/contact/contact.component.css":
 /***/ (function(module, exports) {
 
-module.exports = "agm-map {\r\n  height: 400px;\r\n}\r\n\r\n.c1 {\r\n  /*clip-path: polygon(38% 15%, 71% 14%, 91% 57%, 76% 60%, 65% 40%, 59% 60%, 48% 41%, 41% 57%, 24% 56%);*/\r\n}\r\n"
+module.exports = ".contact{\r\n  /*background-color: #64B5F6;*/\r\n  width: 100%;\r\n  height: 100%;\r\n}\r\n\r\nagm-map {\r\n  height: 400px;\r\n}\r\n"
 
 /***/ }),
 
 /***/ "./src/app/contact/contact.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\n\n<div class=\"container c1\">\n  <agm-map\n    [latitude]=\"latitude\"\n    [longitude]=\"longitude\"\n    [zoom]=\"18\"\n    (mapClick)=\"onChoseLocation($event)\">\n    <agm-marker\n      [latitude]=\"latitude\"\n      [longitude]=\"longitude\"\n      [label]=\"'location'\"\n      [title]=\"'myLocation'\">\n    </agm-marker>\n  </agm-map>\n</div>\n\n\n<app-footer></app-footer>\n"
+module.exports = "<app-header></app-header>\n\n<div class=\"contact\">\n  <agm-map\n    [latitude]=\"latitude\"\n    [longitude]=\"longitude\"\n    [zoom]=\"17\"\n    [mapTypeId]=\"'hybrid'\"\n    (mapClick)=\"onChoseLocation($event)\">\n    <agm-marker\n      [latitude]=\"latitude\"\n      [longitude]=\"longitude\"\n      [label]=\"''\"\n      [title]=\"'Loc De Joaca Kids Party Kungfu Pizza - KPKP'\">\n    </agm-marker>\n  </agm-map>\n\n  <div class=\"container\">\n    <div class=\"row\">\n      <div class=\"col-xl-4 col-lg-4 col-md-6 col-sm-12\">\n        <h3>CONTACT</h3>\n        <p>Telefon informatii si rezervari: <a href=\"tel:+0720 317 252\">0720 317 252 </a></p>\n        <p>Email: kidspartykungfupizza@gmail.com</p>\n      </div>\n      <div class=\"col-xl-4 col-lg-4 col-md-6 col-sm-12\">\n        <h3>PROGRAM</h3>\n        <p>Luni - Duminica: 12:00 PM - 8:00 PM</p>\n        <p>* in zilele de sarbatoare legala sau in timpul petrecerilor private programul poate suferi modificari!</p>\n      </div>\n      <div class=\"col-xl-4 col-lg-4 col-md-6 col-sm-12\">\n        <h3>UNDE NE GASITI?</h3>\n        <p>Bd. Bucurestii Noi, nr. 48, sector 1, Bucuresti</p>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"container\">\n    <div class=\"col-xl-6 col-lg-6 col-md-12 col-sm-12 offset-xl-3 offset-lg-3\">\n      <form>\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" placeholder=\"Numele dumneavoastra\">\n        </div>\n        <div class=\"form-group\">\n          <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter email\">\n          <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\n        </div>\n        <div class=\"form-group\">\n          <input type=\"tel\" class=\"form-control\" placeholder=\"Telefon\">\n        </div>\n        <div class=\"form-group\">\n          <textarea name=\"\" id=\"\" cols=\"10\" rows=\"5\"  placeholder=\"Mesaj\" class=\"form-control\"></textarea>\n        </div>\n\n        <div class=\"text-center\">\n          <button type=\"submit\" class=\"btn btn-primary\">Trimite</button>\n        </div>\n      </form>\n    </div>\n  </div>\n</div>\n<app-footer></app-footer>\n"
 
 /***/ }),
 
@@ -383,8 +387,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var ContactComponent = /** @class */ (function () {
     function ContactComponent() {
-        this.latitude = 44.459417;
-        this.longitude = 26.075994;
+        this.latitude = 44.480514;
+        this.longitude = 26.043097;
     }
     ContactComponent.prototype.ngOnInit = function () {
     };
@@ -402,6 +406,56 @@ var ContactComponent = /** @class */ (function () {
     return ContactComponent;
 }());
 exports.ContactComponent = ContactComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/deals/deals.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/deals/deals.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<app-header></app-header>\n<p>\n  deals works!\n</p>\n<app-footer></app-footer>\n"
+
+/***/ }),
+
+/***/ "./src/app/deals/deals.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var DealsComponent = /** @class */ (function () {
+    function DealsComponent() {
+    }
+    DealsComponent.prototype.ngOnInit = function () {
+    };
+    DealsComponent = __decorate([
+        core_1.Component({
+            selector: 'app-deals',
+            template: __webpack_require__("./src/app/deals/deals.component.html"),
+            styles: [__webpack_require__("./src/app/deals/deals.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], DealsComponent);
+    return DealsComponent;
+}());
+exports.DealsComponent = DealsComponent;
 
 
 /***/ }),
@@ -459,14 +513,14 @@ exports.FooterComponent = FooterComponent;
 /***/ "./src/app/gallery/gallery.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "#vid{\r\n\r\n}\r\n"
 
 /***/ }),
 
 /***/ "./src/app/gallery/gallery.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\n\n<div class=\"container\">\n  <h3>Galerie component</h3>\n  <div class=\"container2\">\n    <input type=\"file\"\n           (change)=\"onFileSelected($event)\"\n           #fileInput>\n    <button type=\"button\" (click)=\"onUpload()\">Upload</button>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">\n      <img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">\n    </div>\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">\n      <img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">\n    </div>\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">\n      <img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">\n    </div>\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">\n      <img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">\n    </div>\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">\n      <img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">\n    </div>\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">\n      <img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">\n    </div>\n  </div>\n</div>\n\n<app-footer></app-footer>\n"
+module.exports = "<app-header></app-header>\n\n<h3>Gallery component</h3>\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">\n      <img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">\n    </div>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-12\">\n      <video id=\"vid\" class=\"img-fluid\" (click)=\"onClick($event)\">\n        <source src=\"../../assets/videos/MOV_2362.mp4\" type=\"video/mp4\">\n        <!--<source src=\"mov_bbb.ogg\" type=\"video/ogg\">-->\n        Your browser does not support HTML5 video.\n      </video>\n    </div>\n\n  </div>\n  <!--<div class=\"row\">-->\n    <!--<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12\">-->\n      <!--<div class=\"img-fluid\">-->\n        <!--<iframe src=\"https://www.youtube.com/embed/YVkUvmDQ3HY?rel=0&amp;showinfo=0\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>-->\n      <!--</div>-->\n    <!--</div>-->\n  <!--</div>-->\n</div>\n\n<div class=\"container\">\n  <h4>Upload images</h4>\n    <input type=\"file\"\n           (change)=\"onFileSelected($event)\"\n           #fileInput>\n    <button type=\"button\" (click)=\"onUpload()\">Upload</button>\n</div>\n\n<div class=\"container\">\n  <h4>Upload movie</h4>\n    <input type=\"file\"\n           (change)=\"onMovieSelected($event)\"\n           #fileInput>\n    <button type=\"button\" (click)=\"onUploadMovie()\">Upload</button>\n</div>\n\n\n\n\n<app-footer></app-footer>\n"
 
 /***/ }),
 
@@ -488,11 +542,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var GalleryComponent = /** @class */ (function () {
+    // @HostListener("window:scroll", []) private onScroll($event:Event):void {
+    //   console.log(event);
+    //   console.log(window.scrollX);
+    //   console.log(window.scrollY);
+    // };
     function GalleryComponent(_httpClient) {
         this._httpClient = _httpClient;
         this.selectedFile = null;
+        this.selectedMovieFile = null;
+        this.video = document.querySelector('#vid');
+        this.clicked = true;
+        this.isFullSize = true;
     }
     GalleryComponent.prototype.ngOnInit = function () {
+    };
+    GalleryComponent.prototype.ngOnChanges = function (changes) {
+        console.log(changes);
+        this.video.addEventListener('click', function (e) {
+            console.log(e);
+            this.video.play();
+        });
     };
     GalleryComponent.prototype.onFileSelected = function (event) {
         console.log(event.target.files);
@@ -517,6 +587,44 @@ var GalleryComponent = /** @class */ (function () {
                 // console.log(event);
             }
         });
+    };
+    GalleryComponent.prototype.onMovieSelected = function (event) {
+        console.log(event.target.files);
+        this.selectedMovieFile = event.target.files[0];
+        console.log(this.selectedMovieFile);
+    };
+    GalleryComponent.prototype.onUploadMovie = function () {
+        var url = '/movie';
+        var fd = new FormData();
+        fd.append('movie', this.selectedMovieFile, this.selectedMovieFile.name);
+        //  Send data to server;
+        this._httpClient.post(url, fd, {
+            reportProgress: true,
+            observe: 'events'
+        }).subscribe(function (event) {
+            if (event.type === http_1.HttpEventType.UploadProgress) {
+                console.log("Upload progress " + Math.round(event.loaded / event.total * 100) + "%");
+            }
+            else if (event.type === http_1.HttpEventType.Response) {
+                console.log(event);
+            }
+            else {
+                // console.log(event);
+            }
+        });
+    };
+    GalleryComponent.prototype.onClick = function (event) {
+        event.controls = false;
+        console.log(event);
+        if (this.clicked) {
+            event.target.play();
+            this.clicked = !this.clicked;
+        }
+        else {
+            event.target.pause();
+            event.controls = false;
+            this.clicked = !this.clicked;
+        }
     };
     GalleryComponent = __decorate([
         core_1.Component({
@@ -543,7 +651,7 @@ module.exports = ""
 /***/ "./src/app/header/header.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\n  <a class=\"navbar-brand\" href=\"#\">Brand</a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\"\n          aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav ml-auto\">\n      <li class=\"nav-item active\">\n        <a class=\"nav-link\" routerLink=\"/\" routerLinkActive=\"active\">Home <span class=\"sr-only\">(current)</span></a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/contact\">Contact</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/galerie\">Galerie</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/logadmin\">Login</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/regadmin\">Register</a>\n      </li>\n      <li class=\"nav-item\" *ngIf=\"user !== undefined\">{{user.username}}</li>\n    </ul>\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\n  <a class=\"navbar-brand\" href=\"#\">Brand</a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\"\n          aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav ml-auto\">\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{exact:\ntrue}\">Home <span class=\"sr-only\">(current)</span></a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/oferte\" routerLinkActive=\"active\">Oferte</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/galerie\" routerLinkActive=\"active\">Galerie</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/contact\" routerLinkActive=\"active\">Contact</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/logadmin\" routerLinkActive=\"active\">Login</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/regadmin\" routerLinkActive=\"active\">Register</a>\n      </li>\n      <li class=\"nav-item\" *ngIf=\"user !== undefined\">{{user.username}}</li>\n    </ul>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -572,7 +680,6 @@ var HeaderComponent = /** @class */ (function () {
     HeaderComponent.prototype.ngOnInit = function () {
         if (this._authService.getUser() !== undefined) {
             this.user = this._authService.getUser();
-            console.log(this.user);
         }
     };
     HeaderComponent = __decorate([
@@ -593,14 +700,14 @@ exports.HeaderComponent = HeaderComponent;
 /***/ "./src/app/home/home.component.css":
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".carousel-img {\r\n  width: 100%;\r\n  height: 100%;\r\n  background-image: url('one.03b2d99ebdf0f91f5e2d.jpeg');\r\n  background-position: center;\r\n  background-repeat: no-repeat;\r\n  background-size: cover;\r\n}\r\n"
 
 /***/ }),
 
 /***/ "./src/app/home/home.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\r\n\r\n<div class=\"container\">\r\n  <h3 id=\"one\">Home Component</h3>\r\n</div>\r\n\r\n<app-footer></app-footer>\r\n"
+module.exports = "<app-header></app-header>\r\n  <div id=\"carouselExampleIndicators\" class=\"carousel slide\" data-ride=\"carousel\">\r\n    <ol class=\"carousel-indicators\">\r\n      <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"0\" class=\"active\"></li>\r\n      <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"1\"></li>\r\n      <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"2\"></li>\r\n    </ol>\r\n    <div class=\"carousel-inner\">\r\n      <div class=\"carousel-item active\">\r\n        <img class=\"img-fluid\" src=\"{{pathToImage}}one.jpeg\" alt=\"First slide\">\r\n      </div>\r\n      <div class=\"carousel-item\">\r\n        <img class=\"img-fluid\" src=\"{{pathToImage}}two.jpeg\" alt=\"Second slide\">\r\n      </div>\r\n      <div class=\"carousel-item\">\r\n        <img class=\"img-fluid\" src=\"{{pathToImage}}three.jpeg\" alt=\"Third slide\">\r\n      </div>\r\n    </div>\r\n    <a class=\"carousel-control-prev\" href=\"#carouselExampleIndicators\" role=\"button\" data-slide=\"prev\">\r\n      <span class=\"carousel-control-prev-icon\" aria-hidden=\"true\"></span>\r\n      <span class=\"sr-only\">Previous</span>\r\n    </a>\r\n    <a class=\"carousel-control-next\" href=\"#carouselExampleIndicators\" role=\"button\" data-slide=\"next\">\r\n      <span class=\"carousel-control-next-icon\" aria-hidden=\"true\"></span>\r\n      <span class=\"sr-only\">Next</span>\r\n    </a>\r\n  </div>\r\n<app-footer></app-footer>\r\n"
 
 /***/ }),
 
@@ -628,8 +735,10 @@ var HomeComponent = /** @class */ (function () {
         this._authService = _authService;
         this.isValidToken = false;
         this.token = '';
+        this.pathToImage = '';
     }
     HomeComponent.prototype.ngOnInit = function () {
+        this.pathToImage = '../../assets/images/carousel/';
         // this.token = this._authService.getToken();
         // this.token.length <= 0 ? this.isValidToken = true : this.isValidToken = false;
     };

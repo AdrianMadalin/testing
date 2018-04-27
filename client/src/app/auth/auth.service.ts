@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import 'rxjs/add/operator/map';
 
@@ -7,21 +7,23 @@ import 'rxjs/add/operator/map';
 export class AuthService {
   authToken: String = '';
   user: Object = {};
+  uploadedImages: any;
 
-  constructor(private _httpClient: HttpClient) { }
+  constructor(private _httpClient: HttpClient) {
+  }
 
-  onRegisterUser(user){
+  onRegisterUser(user) {
     const url = '/regadmin';
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    return this._httpClient.post(url,user,{headers}).map((res)=> res)
+    return this._httpClient.post(url, user, {headers}).map((res) => res)
   }
 
-  onLoginUser(user){
+  onLoginUser(user) {
     const url = '/logadmin';
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    return this._httpClient.post(url,user,{headers}).map((res)=> res)
+    return this._httpClient.post(url, user, {headers}).map((res) => res)
   }
 
   storeUserData(token, user) {
@@ -32,15 +34,29 @@ export class AuthService {
   }
 
   getToken() {
-    if(localStorage.getItem('id_token')){
+    if (localStorage.getItem('id_token')) {
       return localStorage.getItem('id_token');
     } else return;
   }
 
   getUser() {
-    if(localStorage.getItem('user')){
+    if (localStorage.getItem('user')) {
       return JSON.parse(localStorage.getItem('user'));
     } else return;
+  }
+
+  getUploadedImages() {
+    const url = '/api-images/kungfu';
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    return this._httpClient.get(url, {headers}).map((res) => res);
+  }
+
+  removeUploadedImage(id) {
+    const url = '/api-images/kungfu';
+    const headers = new HttpHeaders();
+    headers.append('Content-Type', 'application/json');
+    return this._httpClient.put(url, id, {headers}).map((res) => res);
   }
 
 }

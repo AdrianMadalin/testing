@@ -2,6 +2,24 @@
 
 <h3>Gallery component</h3>
 
+<div class="container">
+  <h4>Upload images</h4>
+  <input type="file"
+         (change)="onFileSelected($event)"
+         #fileInput
+         multiple>
+  <button type="button" (click)="onFileUpload()">Upload</button>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12" *ngFor="let img of uploadedImages">
+      <img src="../../assets/images/gallery/{{img.name}}" alt="{{img.name}}" class="img-fluid">
+      <button class="btn btn-danger" (click)="onDeleteImage($event)" value="{{img._id}}"> Delete {{img.name}}</button>
+    </div>
+  </div>
+</div>
 <!--<div class="container">-->
 <!--<div class="row">-->
 <!--<div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">-->
@@ -10,17 +28,17 @@
 <!--</div>-->
 <!--</div>-->
 
-<div class="container">
-  <div class="row">
-    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12">
-      <video id="vid" class="img-fluid" (click)="onClick($event)">
-        <source src="../../assets/videos/MOV_2362.mp4" type="video/mp4">
+<!--<div class="container">-->
+  <!--<div class="row">-->
+    <!--<div class="col-xl-3 col-lg-3 col-md-4 col-sm-12">-->
+      <!--<video id="vid" class="img-fluid" (click)="onClick($event)">-->
+        <!--<source src="../../assets/videos/MOV_2362.mp4" type="video/mp4">-->
         <!--<source src="mov_bbb.ogg" type="video/ogg">-->
-        Your browser does not support HTML5 video.
-      </video>
-    </div>
+        <!--Your browser does not support HTML5 video.-->
+      <!--</video>-->
+    <!--</div>-->
+  <!--</div>-->
 
-  </div>
   <!--<div class="row">-->
   <!--<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">-->
   <!--<div class="img-fluid">-->
@@ -28,24 +46,17 @@
   <!--</div>-->
   <!--</div>-->
   <!--</div>-->
-</div>
+<!--</div>-->
 
-<div class="container">
-  <h4>Upload images</h4>
-  <input type="file"
-         (change)="onFileSelected($event)"
-         #fileInput
-         multiple>
-  <button type="button" (click)="onUpload()">Upload</button>
-</div>
 
-<div class="container">
-  <h4>Upload movie</h4>
-  <input type="file"
-         (change)="onMovieSelected($event)"
-         #fileInput>
-  <button type="button" (click)="onUploadMovie()">Upload</button>
-</div>
+
+<!--<div class="container">-->
+  <!--<h4>Upload movie</h4>-->
+  <!--<input type="file"-->
+         <!--(change)="onMovieSelected($event)"-->
+         <!--#fileInput>-->
+  <!--<button type="button" (click)="onUploadMovie()">Upload</button>-->
+<!--</div>-->
 
 
 <app-footer></app-footer>

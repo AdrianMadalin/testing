@@ -19,6 +19,22 @@ const uploadSingleFile = (path, file) => {
     return multer({storage: storage}).single(file);
 };
 
+router.get('/api-images/kungfu', (req, res) => {
+    Image.find({}).sort({createdAt: -1}).exec((err, foundImage) => {
+        if (err) {
+            console.error(`Error`, err);
+            console.error('Error uploading the image service');
+            res.status(400).send({error: 'Error uploading the image service'});
+            return next();
+        } else {
+            res.status(200).send({
+                message: 'success',
+                images: foundImage
+            });
+        }
+    })
+});
+
 router.post('/api-images/kungfu', (req, res) => {
     const uploadImagePath = path.join(__dirname, ('../../client/src/assets/images/gallery'));
 
@@ -44,12 +60,19 @@ router.post('/api-images/kungfu', (req, res) => {
             const images = [];
             const checkMimeTypr = async () => {
                 await req.files.forEach((image) => {
+                    console.log(image)
                     if (image.mimetype === 'image/jpeg') {
                         console.info(`Success`, `Image uploaded to the server`);
                         images.push(image);
+                        Image.addImage(image, (err) => {
+                            if (err) {
+                                console.log(`Error saving file to the database`);
+                                throw err;
+                            }
+                        })
                     } else {
                         fs.unlink(image.path, (err) => {
-                            if(err){
+                            if (err) {
                                 console.log({
                                     err,
                                     message: 'Error removing the image from the server'
@@ -58,7 +81,6 @@ router.post('/api-images/kungfu', (req, res) => {
                         })
                     }
                 });
-
                 return images;
             };
 
@@ -71,6 +93,42 @@ router.post('/api-images/kungfu', (req, res) => {
             }).catch((err) => {
                 console.log(err)
             });
+        }
+    });
+});
+
+router.put('/api-images/kungfu', (req, res) => {
+    Image.findImageById(req.body.id, (err, foundImage) => {
+        if (err) {
+            console.error(`Error`, err);
+            console.error('Error uploading the image service');
+            res.status(400).send({error: 'Error uploading the image service'});
+            return next();
+        } else {
+            Image.findByIdAndRemove(foundImage._id, (err) => {
+                if (err) {
+                    console.error(`Error`, err);
+                    console.error('Error uploading the image service');
+                    res.status(400).send({error: 'Error uploading the image service'});
+                    return next();
+                } else {
+                    console.log(`route hit`);
+                    fs.unlink(foundImage.path, (err) => {
+                        if(err){
+                            console.error(`Error`, err);
+                            console.error('Error uploading the image service');
+                            res.status(400).send({error: 'Error uploading the image service'});
+                            return next();
+                        } else {
+                            res.status(200).send({
+                                success: true,
+                                message: `Image was removed from the database`,
+                                imageName: foundImage
+                            })
+                        }
+                    });
+                }
+            })
         }
     });
 });

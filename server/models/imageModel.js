@@ -26,7 +26,7 @@ module.exports.findImageByImageName = (imageName, sort, callback) => {
 
 module.exports.addImage = (image, callback) => {
     const newImage = new Image({
-        name: image.name,
+        name: image.filename,
         path: image.path,
     });
     newImage.save(callback)

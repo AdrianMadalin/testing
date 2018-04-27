@@ -13,6 +13,7 @@ export class GalleryComponent implements OnInit, OnChanges {
   video = document.querySelector('#vid');
   clicked: Boolean = true;
   isFullSize: Boolean = true;
+  counter: Number = 0;
 
   // @HostListener("window:scroll", []) private onScroll($event:Event):void {
   //   console.log(event);
@@ -28,7 +29,7 @@ export class GalleryComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
-    this.video.addEventListener('click',function (e) {
+    this.video.addEventListener('click', function (e) {
       console.log(e);
       this.video.play();
     })
@@ -36,14 +37,20 @@ export class GalleryComponent implements OnInit, OnChanges {
 
   onFileSelected(event) {
     console.log(event.target.files);
-    this.selectedFile = <File>event.target.files[0];
+    this.selectedFile = <File>event.target.files;
+    this.counter = event.target.files.length;
     console.log(this.selectedFile);
+
   }
 
   onUpload() {
-    const url = '/test';
+    const url = '/api-images/kungfu';
     const fd = new FormData();
-    fd.append('image', this.selectedFile, this.selectedFile.name);
+    for (let i = 0; i < this.counter; i++) {
+      if (this.selectedFile[i].type === 'image/jpeg') {
+        fd.append('image', this.selectedFile[i], this.selectedFile[i].name);
+      }
+    }
     this._httpClient.post(url, fd, {
       reportProgress: true,
       observe: 'events'
@@ -88,10 +95,10 @@ export class GalleryComponent implements OnInit, OnChanges {
   }
 
 
-  onClick(event){
+  onClick(event) {
     event.controls = false;
     console.log(event)
-    if(this.clicked){
+    if (this.clicked) {
       event.target.play();
       this.clicked = !this.clicked
     } else {

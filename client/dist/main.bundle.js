@@ -365,7 +365,7 @@ module.exports = ".contact{\r\n  /*background-color: #64B5F6;*/\r\n  width: 100%
 /***/ "./src/app/contact/contact.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\n\n<div class=\"contact\">\n  <agm-map\n    [latitude]=\"latitude\"\n    [longitude]=\"longitude\"\n    [zoom]=\"17\"\n    [mapTypeId]=\"'hybrid'\"\n    (mapClick)=\"onChoseLocation($event)\">\n    <agm-marker\n      [latitude]=\"latitude\"\n      [longitude]=\"longitude\"\n      [label]=\"''\"\n      [title]=\"'Loc De Joaca Kids Party Kungfu Pizza - KPKP'\">\n    </agm-marker>\n  </agm-map>\n\n  <div class=\"container\">\n    <div class=\"row\">\n      <div class=\"col-xl-4 col-lg-4 col-md-6 col-sm-12\">\n        <h3>CONTACT</h3>\n        <p>Telefon informatii si rezervari: <a href=\"tel:+0720 317 252\">0720 317 252 </a></p>\n        <p>Email: kidspartykungfupizza@gmail.com</p>\n      </div>\n      <div class=\"col-xl-4 col-lg-4 col-md-6 col-sm-12\">\n        <h3>PROGRAM</h3>\n        <p>Luni - Duminica: 12:00 PM - 8:00 PM</p>\n        <p>* in zilele de sarbatoare legala sau in timpul petrecerilor private programul poate suferi modificari!</p>\n      </div>\n      <div class=\"col-xl-4 col-lg-4 col-md-6 col-sm-12\">\n        <h3>UNDE NE GASITI?</h3>\n        <p>Bd. Bucurestii Noi, nr. 48, sector 1, Bucuresti</p>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"container\">\n    <div class=\"col-xl-6 col-lg-6 col-md-12 col-sm-12 offset-xl-3 offset-lg-3\">\n      <form>\n        <div class=\"form-group\">\n          <input type=\"text\" class=\"form-control\" placeholder=\"Numele dumneavoastra\">\n        </div>\n        <div class=\"form-group\">\n          <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter email\">\n          <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\n        </div>\n        <div class=\"form-group\">\n          <input type=\"tel\" class=\"form-control\" placeholder=\"Telefon\">\n        </div>\n        <div class=\"form-group\">\n          <textarea name=\"\" id=\"\" cols=\"10\" rows=\"5\"  placeholder=\"Mesaj\" class=\"form-control\"></textarea>\n        </div>\n\n        <div class=\"text-center\">\n          <button type=\"submit\" class=\"btn btn-primary\">Trimite</button>\n        </div>\n      </form>\n    </div>\n  </div>\n</div>\n<app-footer></app-footer>\n"
+module.exports = "<app-header></app-header>\r\n\r\n<div class=\"contact\">\r\n  <agm-map\r\n    [latitude]=\"latitude\"\r\n    [longitude]=\"longitude\"\r\n    [zoom]=\"17\"\r\n    [mapTypeId]=\"'hybrid'\"\r\n    (mapClick)=\"onChoseLocation($event)\">\r\n    <agm-marker\r\n      [latitude]=\"latitude\"\r\n      [longitude]=\"longitude\"\r\n      [label]=\"''\"\r\n      [title]=\"'Loc De Joaca Kids Party Kungfu Pizza - KPKP'\">\r\n    </agm-marker>\r\n  </agm-map>\r\n\r\n  <div class=\"container\">\r\n    <div class=\"row\">\r\n      <div class=\"col-xl-4 col-lg-4 col-md-6 col-sm-12\">\r\n        <h3>CONTACT</h3>\r\n        <p>Telefon informatii si rezervari: <a href=\"tel:+0720 317 252\">0720 317 252 </a></p>\r\n        <p>Email: kidspartykungfupizza@gmail.com</p>\r\n      </div>\r\n      <div class=\"col-xl-4 col-lg-4 col-md-6 col-sm-12\">\r\n        <h3>PROGRAM</h3>\r\n        <p>Luni - Duminica: 12:00 PM - 8:00 PM</p>\r\n        <p>* in zilele de sarbatoare legala sau in timpul petrecerilor private programul poate suferi modificari!</p>\r\n      </div>\r\n      <div class=\"col-xl-4 col-lg-4 col-md-6 col-sm-12\">\r\n        <h3>UNDE NE GASITI?</h3>\r\n        <p>Bd. Bucurestii Noi, nr. 48, sector 1, Bucuresti</p>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"container\">\r\n    <div class=\"col-xl-6 col-lg-6 col-md-12 col-sm-12 offset-xl-3 offset-lg-3\">\r\n      <form>\r\n        <div class=\"form-group\">\r\n          <input type=\"text\" class=\"form-control\" placeholder=\"Numele dumneavoastra\">\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" aria-describedby=\"emailHelp\" placeholder=\"Enter email\">\r\n          <small id=\"emailHelp\" class=\"form-text text-muted\">We'll never share your email with anyone else.</small>\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <input type=\"tel\" class=\"form-control\" placeholder=\"Telefon\">\r\n        </div>\r\n        <div class=\"form-group\">\r\n          <textarea name=\"\" id=\"\" cols=\"10\" rows=\"5\"  placeholder=\"Mesaj\" class=\"form-control\"></textarea>\r\n        </div>\r\n\r\n        <div class=\"text-center\">\r\n          <button type=\"submit\" class=\"btn btn-primary\">Trimite</button>\r\n        </div>\r\n      </form>\r\n    </div>\r\n  </div>\r\n</div>\r\n<app-footer></app-footer>\r\n"
 
 /***/ }),
 
@@ -420,7 +420,7 @@ module.exports = ""
 /***/ "./src/app/deals/deals.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\n<p>\n  deals works!\n</p>\n<app-footer></app-footer>\n"
+module.exports = "<app-header></app-header>\r\n<p>\r\n  deals works!\r\n</p>\r\n<app-footer></app-footer>\r\n"
 
 /***/ }),
 
@@ -470,7 +470,7 @@ module.exports = ""
 /***/ "./src/app/footer/footer.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<footer>\n  <div class=\"text-center\">\n    <p class=\"text-white\">FOOTER</p>\n  </div>\n</footer>\n"
+module.exports = "<footer>\r\n  <div class=\"text-center\">\r\n    <p class=\"text-white\">FOOTER</p>\r\n  </div>\r\n</footer>\r\n"
 
 /***/ }),
 
@@ -520,7 +520,7 @@ module.exports = "#vid{\r\n\r\n}\r\n"
 /***/ "./src/app/gallery/gallery.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\n\n<h3>Gallery component</h3>\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">\n      <img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">\n    </div>\n  </div>\n</div>\n\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-12\">\n      <video id=\"vid\" class=\"img-fluid\" (click)=\"onClick($event)\">\n        <source src=\"../../assets/videos/MOV_2362.mp4\" type=\"video/mp4\">\n        <!--<source src=\"mov_bbb.ogg\" type=\"video/ogg\">-->\n        Your browser does not support HTML5 video.\n      </video>\n    </div>\n\n  </div>\n  <!--<div class=\"row\">-->\n    <!--<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12\">-->\n      <!--<div class=\"img-fluid\">-->\n        <!--<iframe src=\"https://www.youtube.com/embed/YVkUvmDQ3HY?rel=0&amp;showinfo=0\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>-->\n      <!--</div>-->\n    <!--</div>-->\n  <!--</div>-->\n</div>\n\n<div class=\"container\">\n  <h4>Upload images</h4>\n    <input type=\"file\"\n           (change)=\"onFileSelected($event)\"\n           #fileInput>\n    <button type=\"button\" (click)=\"onUpload()\">Upload</button>\n</div>\n\n<div class=\"container\">\n  <h4>Upload movie</h4>\n    <input type=\"file\"\n           (change)=\"onMovieSelected($event)\"\n           #fileInput>\n    <button type=\"button\" (click)=\"onUploadMovie()\">Upload</button>\n</div>\n\n\n\n\n<app-footer></app-footer>\n"
+module.exports = "<app-header></app-header>\r\n\r\n<h3>Gallery component</h3>\r\n\r\n<!--<div class=\"container\">-->\r\n<!--<div class=\"row\">-->\r\n<!--<div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">-->\r\n<!--<img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">-->\r\n<!--</div>-->\r\n<!--</div>-->\r\n<!--</div>-->\r\n\r\n<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-12\">\r\n      <video id=\"vid\" class=\"img-fluid\" (click)=\"onClick($event)\">\r\n        <source src=\"../../assets/videos/MOV_2362.mp4\" type=\"video/mp4\">\r\n        <!--<source src=\"mov_bbb.ogg\" type=\"video/ogg\">-->\r\n        Your browser does not support HTML5 video.\r\n      </video>\r\n    </div>\r\n\r\n  </div>\r\n  <!--<div class=\"row\">-->\r\n  <!--<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12\">-->\r\n  <!--<div class=\"img-fluid\">-->\r\n  <!--<iframe src=\"https://www.youtube.com/embed/YVkUvmDQ3HY?rel=0&amp;showinfo=0\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>-->\r\n  <!--</div>-->\r\n  <!--</div>-->\r\n  <!--</div>-->\r\n</div>\r\n\r\n<div class=\"container\">\r\n  <h4>Upload images</h4>\r\n  <input type=\"file\"\r\n         (change)=\"onFileSelected($event)\"\r\n         #fileInput\r\n         multiple>\r\n  <button type=\"button\" (click)=\"onUpload()\">Upload</button>\r\n</div>\r\n\r\n<div class=\"container\">\r\n  <h4>Upload movie</h4>\r\n  <input type=\"file\"\r\n         (change)=\"onMovieSelected($event)\"\r\n         #fileInput>\r\n  <button type=\"button\" (click)=\"onUploadMovie()\">Upload</button>\r\n</div>\r\n\r\n\r\n<app-footer></app-footer>\r\n"
 
 /***/ }),
 
@@ -554,6 +554,7 @@ var GalleryComponent = /** @class */ (function () {
         this.video = document.querySelector('#vid');
         this.clicked = true;
         this.isFullSize = true;
+        this.counter = 0;
     }
     GalleryComponent.prototype.ngOnInit = function () {
     };
@@ -566,13 +567,18 @@ var GalleryComponent = /** @class */ (function () {
     };
     GalleryComponent.prototype.onFileSelected = function (event) {
         console.log(event.target.files);
-        this.selectedFile = event.target.files[0];
+        this.selectedFile = event.target.files;
+        this.counter = event.target.files.length;
         console.log(this.selectedFile);
     };
     GalleryComponent.prototype.onUpload = function () {
-        var url = '/test';
+        var url = '/api-images/kungfu';
         var fd = new FormData();
-        fd.append('image', this.selectedFile, this.selectedFile.name);
+        for (var i = 0; i < this.counter; i++) {
+            if (this.selectedFile[i].type === 'image/jpeg') {
+                fd.append('image', this.selectedFile[i], this.selectedFile[i].name);
+            }
+        }
         this._httpClient.post(url, fd, {
             reportProgress: true,
             observe: 'events'
@@ -651,7 +657,7 @@ module.exports = ""
 /***/ "./src/app/header/header.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\n  <a class=\"navbar-brand\" href=\"#\">Brand</a>\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\"\n          aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\n    <ul class=\"navbar-nav ml-auto\">\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{exact:\ntrue}\">Home <span class=\"sr-only\">(current)</span></a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/oferte\" routerLinkActive=\"active\">Oferte</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/galerie\" routerLinkActive=\"active\">Galerie</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/contact\" routerLinkActive=\"active\">Contact</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/logadmin\" routerLinkActive=\"active\">Login</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" routerLink=\"/regadmin\" routerLinkActive=\"active\">Register</a>\n      </li>\n      <li class=\"nav-item\" *ngIf=\"user !== undefined\">{{user.username}}</li>\n    </ul>\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\r\n  <a class=\"navbar-brand\" href=\"#\">Brand</a>\r\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent\"\r\n          aria-controls=\"navbarSupportedContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n    <span class=\"navbar-toggler-icon\"></span>\r\n  </button>\r\n\r\n  <div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent\">\r\n    <ul class=\"navbar-nav ml-auto\">\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" routerLink=\"/\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{exact:\r\ntrue}\">Home <span class=\"sr-only\">(current)</span></a>\r\n      </li>\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" routerLink=\"/oferte\" routerLinkActive=\"active\">Oferte</a>\r\n      </li>\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" routerLink=\"/galerie\" routerLinkActive=\"active\">Galerie</a>\r\n      </li>\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" routerLink=\"/contact\" routerLinkActive=\"active\">Contact</a>\r\n      </li>\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" routerLink=\"/logadmin\" routerLinkActive=\"active\">Login</a>\r\n      </li>\r\n      <li class=\"nav-item\">\r\n        <a class=\"nav-link\" routerLink=\"/regadmin\" routerLinkActive=\"active\">Register</a>\r\n      </li>\r\n      <li class=\"nav-item\" *ngIf=\"user !== undefined\">{{user.username}}</li>\r\n    </ul>\r\n  </div>\r\n</nav>\r\n"
 
 /***/ }),
 
@@ -768,7 +774,7 @@ module.exports = ".log-background{\r\n  position: fixed;\r\n  width: 100%;\r\n  
 /***/ "./src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"log-background\">\n  <div class=\"form-center-vertical\">\n    <div class=\"text-center text-light\">LOGIN</div>\n    <form  [formGroup]=\"loginForm\" (ngSubmit)=\"onLoginSubmit()\">\n      <div class=\"form-group\">\n        <label for=\"logUsername\" class=\"text-light\">Username</label>\n        <input type=\"text\"\n               class=\"form-control\"\n               id=\"logUsername\" aria-describedby=\"emailHelp\"\n               placeholder=\"Username\" autocomplete=\"false\"\n               formControlName=\"username\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"logPassword\" class=\"text-light\">Password</label>\n        <input type=\"password\"\n               class=\"form-control\"\n               id=\"logPassword\"\n               placeholder=\"Password\"\n               formControlName=\"password\">\n      </div>\n      <div class=\"text-center\">\n        <button type=\"submit\" class=\"btn btn-primary\">Login</button>\n      </div>\n    </form>\n    <div>\n      <div class=\"separate-btn\">\n       <a routerLink=\"/\"><i class=\"fas fa-home\"></i> Go home</a>\n       <a routerLink=\"/regadmin\">to Register <i class=\"fas fa-caret-square-right\"></i></a>\n     </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"log-background\">\r\n  <div class=\"form-center-vertical\">\r\n    <div class=\"text-center text-light\">LOGIN</div>\r\n    <form  [formGroup]=\"loginForm\" (ngSubmit)=\"onLoginSubmit()\">\r\n      <div class=\"form-group\">\r\n        <label for=\"logUsername\" class=\"text-light\">Username</label>\r\n        <input type=\"text\"\r\n               class=\"form-control\"\r\n               id=\"logUsername\" aria-describedby=\"emailHelp\"\r\n               placeholder=\"Username\" autocomplete=\"false\"\r\n               formControlName=\"username\">\r\n      </div>\r\n      <div class=\"form-group\">\r\n        <label for=\"logPassword\" class=\"text-light\">Password</label>\r\n        <input type=\"password\"\r\n               class=\"form-control\"\r\n               id=\"logPassword\"\r\n               placeholder=\"Password\"\r\n               formControlName=\"password\">\r\n      </div>\r\n      <div class=\"text-center\">\r\n        <button type=\"submit\" class=\"btn btn-primary\">Login</button>\r\n      </div>\r\n    </form>\r\n    <div>\r\n      <div class=\"separate-btn\">\r\n       <a routerLink=\"/\"><i class=\"fas fa-home\"></i> Go home</a>\r\n       <a routerLink=\"/regadmin\">to Register <i class=\"fas fa-caret-square-right\"></i></a>\r\n     </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 

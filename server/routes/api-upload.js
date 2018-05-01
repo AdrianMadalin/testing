@@ -5,6 +5,7 @@ const path = require('path');
 const fs = require('fs');
 
 const Image = require('../models/imageModel');
+const Movie = require('../models/movieModel');
 
 const uploadSingleFile = (path, file) => {
     const storage = multer.diskStorage({
@@ -19,7 +20,9 @@ const uploadSingleFile = (path, file) => {
     return multer({storage: storage}).single(file);
 };
 
-router.get('/api-images/kungfu', (req, res) => {
+
+// GET THE IMAGES FROM THE SERVER
+router.get('/api-images/kungfu', (req, res, next) => {
     Image.find({}).sort({createdAt: -1}).exec((err, foundImage) => {
         if (err) {
             console.error(`Error`, err);
@@ -35,7 +38,8 @@ router.get('/api-images/kungfu', (req, res) => {
     })
 });
 
-router.post('/api-images/kungfu', (req, res) => {
+// ADD IMAGES TO THE SERVER
+router.post('/api-images/kungfu', (req, res, next) => {
     const uploadImagePath = path.join(__dirname, ('../../client/src/assets/images/gallery'));
 
     const storage = multer.diskStorage({
@@ -97,8 +101,9 @@ router.post('/api-images/kungfu', (req, res) => {
     });
 });
 
-router.put('/api-images/kungfu', (req, res) => {
-    Image.findImageById(req.body.id, (err, foundImage) => {
+// REMOVE IMAGE FROM THE SERVER
+router.put('/api-images/kungfu', (req, res, next) => {
+    Image.findImageById(req.body._id, (err, foundImage) => {
         if (err) {
             console.error(`Error`, err);
             console.error('Error uploading the image service');
@@ -114,7 +119,7 @@ router.put('/api-images/kungfu', (req, res) => {
                 } else {
                     console.log(`route hit`);
                     fs.unlink(foundImage.path, (err) => {
-                        if(err){
+                        if (err) {
                             console.error(`Error`, err);
                             console.error('Error uploading the image service');
                             res.status(400).send({error: 'Error uploading the image service'});
@@ -133,6 +138,21 @@ router.put('/api-images/kungfu', (req, res) => {
     });
 });
 
+// UPLOAD MOVIE TO THE SERVER
+router.post('/api-movie/kungfu', (req, res, next) => {
+    if(req.body.movieUrl){
+        Movie.addMovie(req.body.movieUrl)
+    }
+
+    console.log(req.body);
+   res.status(200).send({
+       success: true,
+       body: req.body.movieUrl
+   })
+});
+
+
+// TESTING VIDEO
 router.post('/movie', (req, res) => {
     const uploadVideoPath = path.join(__dirname, ('../../client/src/assets/videos'));
     const upload = uploadSingleFile(uploadVideoPath, 'movie');

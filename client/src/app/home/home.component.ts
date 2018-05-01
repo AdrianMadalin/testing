@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {JwtHelper} from "../auth/jwtHelper.service";
-import {AuthService} from "../auth/auth.service";
+import {JwtHelper} from "../services/jwtHelper.service";
+import {AuthService} from "../services/auth.service";
 import * as $ from "jquery";
 
 

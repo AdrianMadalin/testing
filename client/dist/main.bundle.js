@@ -89,11 +89,12 @@ var header_component_1 = __webpack_require__("./src/app/header/header.component.
 var footer_component_1 = __webpack_require__("./src/app/footer/footer.component.ts");
 var login_component_1 = __webpack_require__("./src/app/login/login.component.ts");
 var register_component_1 = __webpack_require__("./src/app/register/register.component.ts");
-var auth_service_1 = __webpack_require__("./src/app/auth/auth.service.ts");
-var jwtHelper_service_1 = __webpack_require__("./src/app/auth/jwtHelper.service.ts");
+var auth_service_1 = __webpack_require__("./src/app/services/auth.service.ts");
+var jwtHelper_service_1 = __webpack_require__("./src/app/services/jwtHelper.service.ts");
 var contact_component_1 = __webpack_require__("./src/app/contact/contact.component.ts");
 var gallery_component_1 = __webpack_require__("./src/app/gallery/gallery.component.ts");
 var deals_component_1 = __webpack_require__("./src/app/deals/deals.component.ts");
+var upload_service_1 = __webpack_require__("./src/app/services/upload.service.ts");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -120,7 +121,7 @@ var AppModule = /** @class */ (function () {
                 forms_1.FormsModule,
                 forms_1.ReactiveFormsModule
             ],
-            providers: [auth_service_1.AuthService, jwtHelper_service_1.JwtHelper],
+            providers: [auth_service_1.AuthService, jwtHelper_service_1.JwtHelper, upload_service_1.UploadService],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);
@@ -175,182 +176,6 @@ var AppRoutesModule = /** @class */ (function () {
     return AppRoutesModule;
 }());
 exports.AppRoutesModule = AppRoutesModule;
-
-
-/***/ }),
-
-/***/ "./src/app/auth/auth.service.ts":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
-__webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
-var AuthService = /** @class */ (function () {
-    function AuthService(_httpClient) {
-        this._httpClient = _httpClient;
-        this.authToken = '';
-        this.user = {};
-    }
-    AuthService.prototype.onRegisterUser = function (user) {
-        var url = '/regadmin';
-        var headers = new http_1.HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        return this._httpClient.post(url, user, { headers: headers }).map(function (res) { return res; });
-    };
-    AuthService.prototype.onLoginUser = function (user) {
-        var url = '/logadmin';
-        var headers = new http_1.HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        return this._httpClient.post(url, user, { headers: headers }).map(function (res) { return res; });
-    };
-    AuthService.prototype.storeUserData = function (token, user) {
-        localStorage.setItem('id_token', token);
-        localStorage.setItem('user', JSON.stringify(user));
-        this.authToken = token;
-        this.user = user;
-    };
-    AuthService.prototype.getToken = function () {
-        if (localStorage.getItem('id_token')) {
-            return localStorage.getItem('id_token');
-        }
-        else
-            return;
-    };
-    AuthService.prototype.getUser = function () {
-        if (localStorage.getItem('user')) {
-            return JSON.parse(localStorage.getItem('user'));
-        }
-        else
-            return;
-    };
-    AuthService = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [http_1.HttpClient])
-    ], AuthService);
-    return AuthService;
-}());
-exports.AuthService = AuthService;
-
-
-/***/ }),
-
-/***/ "./src/app/auth/jwtHelper.service.ts":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-var JwtHelper = /** @class */ (function () {
-    function JwtHelper() {
-    }
-    JwtHelper.prototype.urlBase64Decode = function (str) {
-        var output = str.replace(/-/g, '+').replace(/_/g, '/');
-        switch (output.length % 4) {
-            case 0: {
-                break;
-            }
-            case 2: {
-                output += '==';
-                break;
-            }
-            case 3: {
-                output += '=';
-                break;
-            }
-            default: {
-                throw 'Illegal base64url string!';
-            }
-        }
-        return this.b64DecodeUnicode(output);
-    };
-    // https://developer.mozilla.org/en/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
-    JwtHelper.prototype.b64DecodeUnicode = function (str) {
-        return decodeURIComponent(Array.prototype.map.call(this.b64decode(str), function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-    };
-    // credits for decoder goes to https://github.com/atk
-    JwtHelper.prototype.b64decode = function (str) {
-        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-        var output = '';
-        str = String(str).replace(/=+$/, '');
-        if (str.length % 4 == 1) {
-            throw new Error("'atob' failed: The string to be decoded is not correctly encoded.");
-        }
-        for (
-        // initialize result and counters
-        var bc = 0, bs = void 0, buffer = void 0, idx = 0; 
-        // get next character
-        buffer = str.charAt(idx++); 
-        // character found in table? initialize bit storage and add its ascii value;
-        ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer,
-            // and if not first of each 4 characters,
-            // convert the first 8 bits to one ascii character
-            bc++ % 4) ? output += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0) {
-            // try to find character in table (0-63, not found => -1)
-            buffer = chars.indexOf(buffer);
-        }
-        return output;
-    };
-    JwtHelper.prototype.decodeToken = function (token) {
-        var parts = token.split('.');
-        if (parts.length !== 3) {
-            throw new Error('JWT must have 3 parts');
-        }
-        var decoded = this.urlBase64Decode(parts[1]);
-        if (!decoded) {
-            throw new Error('Cannot decode the token');
-        }
-        return JSON.parse(decoded);
-    };
-    JwtHelper.prototype.getTokenExpirationDate = function (token) {
-        var decoded;
-        decoded = this.decodeToken(token);
-        if (!decoded.hasOwnProperty('exp')) {
-            return null;
-        }
-        var date = new Date(0); // The 0 here is the key, which sets the date to the epoch
-        date.setUTCSeconds(decoded.exp);
-        return date;
-    };
-    JwtHelper.prototype.isTokenExpired = function (token, offsetSeconds) {
-        var date = this.getTokenExpirationDate(token);
-        offsetSeconds = offsetSeconds || 0;
-        if (date == null) {
-            return false;
-        }
-        // Token expired?
-        return !(date.valueOf() > (new Date().valueOf() + (offsetSeconds * 1000)));
-    };
-    JwtHelper = __decorate([
-        core_1.Injectable(),
-        __metadata("design:paramtypes", [])
-    ], JwtHelper);
-    return JwtHelper;
-}());
-exports.JwtHelper = JwtHelper;
 
 
 /***/ }),
@@ -520,7 +345,7 @@ module.exports = "#vid{\r\n\r\n}\r\n"
 /***/ "./src/app/gallery/gallery.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\r\n\r\n<h3>Gallery component</h3>\r\n\r\n<!--<div class=\"container\">-->\r\n<!--<div class=\"row\">-->\r\n<!--<div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-6\">-->\r\n<!--<img src=\"../../assets/images/DNS.jpg\" alt=\"something\" class=\"img-fluid\">-->\r\n<!--</div>-->\r\n<!--</div>-->\r\n<!--</div>-->\r\n\r\n<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-xl-3 col-lg-3 col-md-4 col-sm-12\">\r\n      <video id=\"vid\" class=\"img-fluid\" (click)=\"onClick($event)\">\r\n        <source src=\"../../assets/videos/MOV_2362.mp4\" type=\"video/mp4\">\r\n        <!--<source src=\"mov_bbb.ogg\" type=\"video/ogg\">-->\r\n        Your browser does not support HTML5 video.\r\n      </video>\r\n    </div>\r\n\r\n  </div>\r\n  <!--<div class=\"row\">-->\r\n  <!--<div class=\"col-xl-6 col-lg-6 col-md-6 col-sm-12\">-->\r\n  <!--<div class=\"img-fluid\">-->\r\n  <!--<iframe src=\"https://www.youtube.com/embed/YVkUvmDQ3HY?rel=0&amp;showinfo=0\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>-->\r\n  <!--</div>-->\r\n  <!--</div>-->\r\n  <!--</div>-->\r\n</div>\r\n\r\n<div class=\"container\">\r\n  <h4>Upload images</h4>\r\n  <input type=\"file\"\r\n         (change)=\"onFileSelected($event)\"\r\n         #fileInput\r\n         multiple>\r\n  <button type=\"button\" (click)=\"onUpload()\">Upload</button>\r\n</div>\r\n\r\n<div class=\"container\">\r\n  <h4>Upload movie</h4>\r\n  <input type=\"file\"\r\n         (change)=\"onMovieSelected($event)\"\r\n         #fileInput>\r\n  <button type=\"button\" (click)=\"onUploadMovie()\">Upload</button>\r\n</div>\r\n\r\n\r\n<app-footer></app-footer>\r\n"
+module.exports = "<app-header></app-header>\r\n\r\n<h3>Gallery component</h3>\r\n\r\n<div class=\"container\">\r\n  <h4>Upload images</h4>\r\n  <input type=\"file\"\r\n         (change)=\"onFileSelected($event)\"\r\n         multiple>\r\n  <button type=\"button\" (click)=\"onImageUpload()\">Upload image</button>\r\n</div>\r\n\r\n\r\n<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-xl-4 col-lg-4 col-md-6 col-sm-12\" *ngFor=\"let img of uploadedImages\">\r\n      <img src=\"../../assets/images/gallery/{{img.name}}\" alt=\"{{img.name}}\" class=\"img-fluid\">\r\n      <button class=\"btn btn-danger\" (click)=\"onDeleteImage($event)\" value=\"{{img._id}}\"> Delete {{img.name}}</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<hr>\r\n\r\n<div class=\"container\">\r\n  <h4>Upload movies</h4>\r\n  <input type=\"text\"\r\n         (input)=\"onMovieSelected($event)\">\r\n  <button type=\"button\" (click)=\"onMovieUpload()\">Upload movie</button>\r\n</div>\r\n\r\n\r\n<!--<iframe src=\"https://www.youtube.com/embed/YVkUvmDQ3HY\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>-->\r\n\r\n<app-footer></app-footer>\r\n"
 
 /***/ }),
 
@@ -541,83 +366,99 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+var auth_service_1 = __webpack_require__("./src/app/services/auth.service.ts");
+var jwtHelper_service_1 = __webpack_require__("./src/app/services/jwtHelper.service.ts");
+var upload_service_1 = __webpack_require__("./src/app/services/upload.service.ts");
 var GalleryComponent = /** @class */ (function () {
     // @HostListener("window:scroll", []) private onScroll($event:Event):void {
     //   console.log(event);
     //   console.log(window.scrollX);
     //   console.log(window.scrollY);
     // };
-    function GalleryComponent(_httpClient) {
+    function GalleryComponent(_httpClient, _authService, _jwtHelper, _uploadService) {
         this._httpClient = _httpClient;
+        this._authService = _authService;
+        this._jwtHelper = _jwtHelper;
+        this._uploadService = _uploadService;
         this.selectedFile = null;
-        this.selectedMovieFile = null;
+        this.imageFormData = null;
+        this.uploadImgBtn = true;
+        this.isTokenExpired = false;
+        this.movieUrl = '';
         this.video = document.querySelector('#vid');
         this.clicked = true;
         this.isFullSize = true;
         this.counter = 0;
     }
     GalleryComponent.prototype.ngOnInit = function () {
-    };
-    GalleryComponent.prototype.ngOnChanges = function (changes) {
-        console.log(changes);
-        this.video.addEventListener('click', function (e) {
-            console.log(e);
-            this.video.play();
+        var _this = this;
+        this._authService.getUploadedImages().subscribe(function (data) {
+            _this.uploadedImages = data['images'];
         });
+        this.isTokenExpired = this._authService.isExpired();
     };
     GalleryComponent.prototype.onFileSelected = function (event) {
-        console.log(event.target.files);
+        var files = event.target.files.length;
+        files > 0 ? this.uploadImgBtn = false : this.uploadImgBtn = true;
         this.selectedFile = event.target.files;
-        this.counter = event.target.files.length;
-        console.log(this.selectedFile);
-    };
-    GalleryComponent.prototype.onUpload = function () {
-        var url = '/api-images/kungfu';
-        var fd = new FormData();
-        for (var i = 0; i < this.counter; i++) {
+        this.imageFormData = new FormData();
+        for (var i = 0; i < files; i++) {
             if (this.selectedFile[i].type === 'image/jpeg') {
-                fd.append('image', this.selectedFile[i], this.selectedFile[i].name);
+                this.imageFormData.append('image', this.selectedFile[i], this.selectedFile[i].name);
             }
         }
-        this._httpClient.post(url, fd, {
-            reportProgress: true,
-            observe: 'events'
-        }).subscribe(function (event) {
-            if (event.type === http_1.HttpEventType.UploadProgress) {
-                console.log("Upload progress " + Math.round(event.loaded / event.total * 100) + "%");
-            }
-            else if (event.type === http_1.HttpEventType.Response) {
-                console.log(event);
-            }
-            else {
-                // console.log(event);
-            }
-        });
+    };
+    GalleryComponent.prototype.onImageUpload = function () {
+        var _this = this;
+        if (!this.isTokenExpired) {
+            var url = '/api-images/kungfu';
+            this._httpClient.post(url, this.imageFormData, {
+                reportProgress: true,
+                observe: 'events'
+            }).subscribe(function (event) {
+                if (event.type === http_1.HttpEventType.UploadProgress) {
+                    console.log("Upload progress " + Math.round(event.loaded / event.total * 100) + "%");
+                }
+                else if (event.type === http_1.HttpEventType.Response) {
+                    console.log(event);
+                    _this._authService.getUploadedImages().subscribe(function (data) {
+                        _this.uploadedImages = data['images'];
+                    });
+                }
+                else {
+                    // console.log(event);
+                }
+            });
+        }
+        else {
+            console.log("EXPIRED TOKEN");
+        }
+    };
+    GalleryComponent.prototype.onDeleteImage = function (event) {
+        var _this = this;
+        if (!this.isTokenExpired) {
+            var id = event.target.value;
+            this._authService.removeUploadedImage(id).subscribe(function (data) {
+                console.log(data);
+                _this._authService.getUploadedImages().subscribe(function (data) {
+                    _this.uploadedImages = data['images'];
+                });
+            });
+        }
     };
     GalleryComponent.prototype.onMovieSelected = function (event) {
-        console.log(event.target.files);
-        this.selectedMovieFile = event.target.files[0];
-        console.log(this.selectedMovieFile);
+        this.movieUrl = event.target.value;
+        console.log(this.movieUrl);
     };
-    GalleryComponent.prototype.onUploadMovie = function () {
-        var url = '/movie';
-        var fd = new FormData();
-        fd.append('movie', this.selectedMovieFile, this.selectedMovieFile.name);
-        //  Send data to server;
-        this._httpClient.post(url, fd, {
-            reportProgress: true,
-            observe: 'events'
-        }).subscribe(function (event) {
-            if (event.type === http_1.HttpEventType.UploadProgress) {
-                console.log("Upload progress " + Math.round(event.loaded / event.total * 100) + "%");
-            }
-            else if (event.type === http_1.HttpEventType.Response) {
-                console.log(event);
-            }
-            else {
-                // console.log(event);
-            }
-        });
+    GalleryComponent.prototype.onMovieUpload = function () {
+        if (this.movieUrl.length > 0) {
+            this._uploadService.onMovieUpload({ movieUrl: this.movieUrl }).subscribe(function (response) {
+                console.log(response);
+            });
+        }
+        else {
+            console.log("Empty input");
+        }
     };
     GalleryComponent.prototype.onClick = function (event) {
         event.controls = false;
@@ -638,7 +479,10 @@ var GalleryComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/gallery/gallery.component.html"),
             styles: [__webpack_require__("./src/app/gallery/gallery.component.css")]
         }),
-        __metadata("design:paramtypes", [http_1.HttpClient])
+        __metadata("design:paramtypes", [http_1.HttpClient,
+            auth_service_1.AuthService,
+            jwtHelper_service_1.JwtHelper,
+            upload_service_1.UploadService])
     ], GalleryComponent);
     return GalleryComponent;
 }());
@@ -677,7 +521,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-var auth_service_1 = __webpack_require__("./src/app/auth/auth.service.ts");
+var auth_service_1 = __webpack_require__("./src/app/services/auth.service.ts");
 var HeaderComponent = /** @class */ (function () {
     function HeaderComponent(_authService) {
         this._authService = _authService;
@@ -733,8 +577,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-var jwtHelper_service_1 = __webpack_require__("./src/app/auth/jwtHelper.service.ts");
-var auth_service_1 = __webpack_require__("./src/app/auth/auth.service.ts");
+var jwtHelper_service_1 = __webpack_require__("./src/app/services/jwtHelper.service.ts");
+var auth_service_1 = __webpack_require__("./src/app/services/auth.service.ts");
 var HomeComponent = /** @class */ (function () {
     function HomeComponent(_jwtHelper, _authService) {
         this._jwtHelper = _jwtHelper;
@@ -795,7 +639,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
-var auth_service_1 = __webpack_require__("./src/app/auth/auth.service.ts");
+var auth_service_1 = __webpack_require__("./src/app/services/auth.service.ts");
 var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var LoginComponent = /** @class */ (function () {
     function LoginComponent(_authService, _router) {
@@ -867,7 +711,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
-var auth_service_1 = __webpack_require__("./src/app/auth/auth.service.ts");
+var auth_service_1 = __webpack_require__("./src/app/services/auth.service.ts");
 var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var RegisterComponent = /** @class */ (function () {
     function RegisterComponent(_authService, _router) {
@@ -911,6 +755,243 @@ var RegisterComponent = /** @class */ (function () {
     return RegisterComponent;
 }());
 exports.RegisterComponent = RegisterComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/services/auth.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+__webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
+var jwtHelper_service_1 = __webpack_require__("./src/app/services/jwtHelper.service.ts");
+var AuthService = /** @class */ (function () {
+    function AuthService(_httpClient, _jwtHelper) {
+        this._httpClient = _httpClient;
+        this._jwtHelper = _jwtHelper;
+        this.authToken = '';
+        this.user = {};
+    }
+    AuthService.prototype.onRegisterUser = function (user) {
+        var url = '/regadmin';
+        var headers = new http_1.HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        return this._httpClient.post(url, user, { headers: headers }).map(function (res) { return res; });
+    };
+    AuthService.prototype.onLoginUser = function (user) {
+        var url = '/logadmin';
+        var headers = new http_1.HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        return this._httpClient.post(url, user, { headers: headers }).map(function (res) { return res; });
+    };
+    AuthService.prototype.storeUserData = function (token, user) {
+        localStorage.setItem('id_token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+        this.authToken = token;
+        this.user = user;
+    };
+    AuthService.prototype.getToken = function () {
+        if (localStorage.getItem('id_token')) {
+            return localStorage.getItem('id_token');
+        }
+    };
+    AuthService.prototype.isExpired = function () {
+        if (this.getToken()) {
+            console.log(this._jwtHelper.isTokenExpired(this.getToken().split(' ')[1]));
+            return this._jwtHelper.isTokenExpired(this.getToken().split(' ')[1]);
+        }
+        else {
+            return false;
+        }
+    };
+    AuthService.prototype.getUser = function () {
+        if (localStorage.getItem('user')) {
+            return JSON.parse(localStorage.getItem('user'));
+        }
+        else
+            return;
+    };
+    AuthService.prototype.getUploadedImages = function () {
+        var url = '/api-images/kungfu';
+        var headers = new http_1.HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        return this._httpClient.get(url, { headers: headers }).map(function (res) { return res; });
+    };
+    AuthService.prototype.removeUploadedImage = function (id) {
+        var url = '/api-images/kungfu';
+        var headers = new http_1.HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        return this._httpClient.put(url, { _id: id }, { headers: headers }).map(function (res) { return res; });
+    };
+    AuthService = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.HttpClient,
+            jwtHelper_service_1.JwtHelper])
+    ], AuthService);
+    return AuthService;
+}());
+exports.AuthService = AuthService;
+
+
+/***/ }),
+
+/***/ "./src/app/services/jwtHelper.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var JwtHelper = /** @class */ (function () {
+    function JwtHelper() {
+    }
+    JwtHelper.prototype.urlBase64Decode = function (str) {
+        var output = str.replace(/-/g, '+').replace(/_/g, '/');
+        switch (output.length % 4) {
+            case 0: {
+                break;
+            }
+            case 2: {
+                output += '==';
+                break;
+            }
+            case 3: {
+                output += '=';
+                break;
+            }
+            default: {
+                throw 'Illegal base64url string!';
+            }
+        }
+        return this.b64DecodeUnicode(output);
+    };
+    // https://developer.mozilla.org/en/docs/Web/API/WindowBase64/Base64_encoding_and_decoding#The_Unicode_Problem
+    JwtHelper.prototype.b64DecodeUnicode = function (str) {
+        return decodeURIComponent(Array.prototype.map.call(this.b64decode(str), function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    };
+    // credits for decoder goes to https://github.com/atk
+    JwtHelper.prototype.b64decode = function (str) {
+        var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+        var output = '';
+        str = String(str).replace(/=+$/, '');
+        if (str.length % 4 == 1) {
+            throw new Error("'atob' failed: The string to be decoded is not correctly encoded.");
+        }
+        for (
+        // initialize result and counters
+        var bc = 0, bs = void 0, buffer = void 0, idx = 0; 
+        // get next character
+        buffer = str.charAt(idx++); 
+        // character found in table? initialize bit storage and add its ascii value;
+        ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer,
+            // and if not first of each 4 characters,
+            // convert the first 8 bits to one ascii character
+            bc++ % 4) ? output += String.fromCharCode(255 & bs >> (-2 * bc & 6)) : 0) {
+            // try to find character in table (0-63, not found => -1)
+            buffer = chars.indexOf(buffer);
+        }
+        return output;
+    };
+    JwtHelper.prototype.decodeToken = function (token) {
+        var parts = token.split('.');
+        if (parts.length !== 3) {
+            throw new Error('JWT must have 3 parts');
+        }
+        var decoded = this.urlBase64Decode(parts[1]);
+        if (!decoded) {
+            throw new Error('Cannot decode the token');
+        }
+        return JSON.parse(decoded);
+    };
+    JwtHelper.prototype.getTokenExpirationDate = function (token) {
+        var decoded;
+        decoded = this.decodeToken(token);
+        if (!decoded.hasOwnProperty('exp')) {
+            return null;
+        }
+        var date = new Date(0); // The 0 here is the key, which sets the date to the epoch
+        date.setUTCSeconds(decoded.exp);
+        return date;
+    };
+    JwtHelper.prototype.isTokenExpired = function (token, offsetSeconds) {
+        var date = this.getTokenExpirationDate(token);
+        offsetSeconds = offsetSeconds || 0;
+        if (date == null) {
+            return false;
+        }
+        // Token expired?
+        return !(date.valueOf() > (new Date().valueOf() + (offsetSeconds * 1000)));
+    };
+    JwtHelper = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [])
+    ], JwtHelper);
+    return JwtHelper;
+}());
+exports.JwtHelper = JwtHelper;
+
+
+/***/ }),
+
+/***/ "./src/app/services/upload.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
+__webpack_require__("./node_modules/rxjs/_esm5/add/operator/map.js");
+var UploadService = /** @class */ (function () {
+    function UploadService(_httpClient) {
+        this._httpClient = _httpClient;
+    }
+    UploadService.prototype.onMovieUpload = function (data) {
+        var url = '/api-movie/kungfu';
+        var headers = new http_1.HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        return this._httpClient.post(url, data, { headers: headers }).map(function (response) { return response; });
+    };
+    UploadService = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [http_1.HttpClient])
+    ], UploadService);
+    return UploadService;
+}());
+exports.UploadService = UploadService;
 
 
 /***/ }),

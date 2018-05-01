@@ -8,6 +8,7 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const config = require('./utils/config');
+const jwt = require('jsonwebtoken');
 
 const apiRoutes = require('./routes/api-routes');
 const apiUpload = require('./routes/api-upload');
@@ -18,7 +19,7 @@ const app = express();
 const connectToDb = mongoose.connect(config.database);
 connectToDb.then(() => {
     console.log('Connected to the database');
-}, (err) =>{
+}, (err) => {
     console.log(`Error connecting to the database`);
     console.log(err);
 });
@@ -56,5 +57,14 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
+// const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjVhZGYzZDU5MzZlZTcyMWY3MDQ0ZjVhYiIsInVzZXJuYW1lIjoiYWRpIiwicGFzc3dvcmQiOiIkMmIkMTAkVFcxd2s1MWdzeHR2eG5FdTcyMy8wZWx2L0ZjME5kM1oyelg1bnhKQVluRmNOSU05b1lDLi4iLCJfX3YiOjB9LCJpYXQiOjE1MjUxMjgzMDcsImV4cCI6MTUyNTEzMTkwN30.cHCd0Y6_eBS7qQpwD3v03uUGlso8axHj6kl-RIfkK_M'
+// jwt.verify(token, 'qqq', (err, decoded) => {
+//     if(err){
+//         console.log(err)
+//     } else {
+//         console.log(`is ok`)
+//         console.log(decoded)
+//     }
+// })
 
 module.exports = app;

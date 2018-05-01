@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import 'rxjs/add/operator/map';
+import {JwtHelper} from "./jwtHelper.service";
 
 
 @Injectable()
@@ -9,7 +10,8 @@ export class AuthService {
   user: Object = {};
   uploadedImages: any;
 
-  constructor(private _httpClient: HttpClient) {
+  constructor(private _httpClient: HttpClient,
+              private _jwtHelper: JwtHelper) {
   }
 
   onRegisterUser(user) {
@@ -36,7 +38,16 @@ export class AuthService {
   getToken() {
     if (localStorage.getItem('id_token')) {
       return localStorage.getItem('id_token');
-    } else return;
+    }
+  }
+
+  isExpired() {
+    if (this.getToken()) {
+      console.log(this._jwtHelper.isTokenExpired(this.getToken().split(' ')[1]));
+      return this._jwtHelper.isTokenExpired(this.getToken().split(' ')[1]);
+    } else {
+      return false
+    }
   }
 
   getUser() {
@@ -56,7 +67,7 @@ export class AuthService {
     const url = '/api-images/kungfu';
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    return this._httpClient.put(url, id, {headers}).map((res) => res);
+    return this._httpClient.put(url, {_id: id}, {headers}).map((res) => res);
   }
 
 }

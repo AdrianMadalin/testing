@@ -51,7 +51,7 @@ router.post('/logadmin', (req, res) => {
 
                 if (isMatch) {
                     const token = jwt.sign({data:user}, config.secret,{
-                        expiresIn: `30000` //30 secs
+                        expiresIn: `1h`
                     });
                     res.json({
                         success: true,

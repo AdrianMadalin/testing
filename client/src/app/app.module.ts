@@ -15,6 +15,7 @@ import {JwtHelper} from "./services/jwtHelper.service";
 import { ContactComponent } from './contact/contact.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { DealsComponent } from './deals/deals.component';
+import {UploadService} from "./services/upload.service";
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import { DealsComponent } from './deals/deals.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService,JwtHelper],
+  providers: [AuthService,JwtHelper,UploadService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

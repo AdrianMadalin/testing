@@ -24,12 +24,17 @@
 
 <div class="container">
   <h4>Upload movies</h4>
-  <input type="text"
-         (input)="onMovieSelected($event)">
+  <input type="text" [(ngModel)]="movieUrl">
   <button type="button" (click)="onMovieUpload()">Upload movie</button>
 </div>
 
-
-<!--<iframe src="https://www.youtube.com/embed/YVkUvmDQ3HY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
+<div class="container">
+  <div class="row">
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12" *ngFor="let movieUrl of uploadedMovieUrl">
+      <iframe [src]='_sanitizer.bypassSecurityTrustResourceUrl(movieUrl.name)' frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <button class="btn btn-danger" (click)="onDeleteMovieUrl($event)" value="{{movieUrl.name}}"> Delete </button>
+    </div>
+  </div>
+</div>
 
 <app-footer></app-footer>

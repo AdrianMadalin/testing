@@ -18,3 +18,7 @@ module.exports.addMovie = (movie, callback) => {
     });
     newMovie.save(callback)
 };
+
+module.exports.findMovieName = (urlName, sort, callback) => {
+    Movie.findOne({name: urlName}).sort({createdAt: sort}).exec(callback);
+};

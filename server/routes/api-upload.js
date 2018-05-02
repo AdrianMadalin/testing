@@ -64,7 +64,6 @@ router.post('/api-images/kungfu', (req, res, next) => {
             const images = [];
             const checkMimeTypr = async () => {
                 await req.files.forEach((image) => {
-                    console.log(image)
                     if (image.mimetype === 'image/jpeg') {
                         console.info(`Success`, `Image uploaded to the server`);
                         images.push(image);
@@ -138,17 +137,57 @@ router.put('/api-images/kungfu', (req, res, next) => {
     });
 });
 
+// GET MOVIE URL FROM THE SERVER
+router.get('/api-movie/kungfu', (req, res, next) => {
+    Movie.find({}).sort({createdAt: -1}).exec((err, foundUrl)=>{
+        if (err) {
+            console.error(`Error`, err);
+            console.error('Error uploading the image service');
+            res.status(400).send({error: 'Error uploading the image service'});
+            return next();
+        } else {
+            res.status(200).send({
+                message: 'success',
+                url: foundUrl
+            });
+        }
+    });
+});
+
+// DELETE MOVIE URL FROM THE SERVER
+router.put('/api-movie/kungfu', (req, res, next) => {
+    Movie.find({}).sort({createdAt: -1}).exec((err, foundUrl)=>{
+        if (err) {
+            console.error(`Error`, err);
+            console.error('Error uploading the image service');
+            res.status(400).send({error: 'Error uploading the image service'});
+            return next();
+        } else {
+            res.status(200).send({
+                message: 'success',
+                url: foundUrl
+            });
+        }
+    });
+});
+
+
 // UPLOAD MOVIE TO THE SERVER
 router.post('/api-movie/kungfu', (req, res, next) => {
-    if(req.body.movieUrl){
-        Movie.addMovie(req.body.movieUrl)
+    if (req.body.movieUrl) {
+        Movie.addMovie(req.body.movieUrl, (err, uploadedMovie) => {
+            if (err) {
+                console.log(`Error saving file to the database`);
+                throw err;
+            } else {
+                console.log(`Uploaded link to the database`);
+                res.status(200).send({
+                    success: true,
+                    body: uploadedMovie
+                });
+            }
+        })
     }
-
-    console.log(req.body);
-   res.status(200).send({
-       success: true,
-       body: req.body.movieUrl
-   })
 });
 
 

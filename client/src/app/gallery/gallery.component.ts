@@ -3,6 +3,8 @@ import {HttpClient, HttpEventType} from "@angular/common/http";
 import {AuthService} from "../services/auth.service";
 import {JwtHelper} from "../services/jwtHelper.service";
 import {UploadService} from "../services/upload.service";
+import {DomSanitizer} from "@angular/platform-browser";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-gallery',
@@ -16,7 +18,9 @@ export class GalleryComponent implements OnInit {
 
   uploadedImages: any;
   isTokenExpired: boolean = false;
+
   movieUrl: string = '';
+  uploadedMovieUrl: any;
 
   video = document.querySelector('#vid');
   clicked: Boolean = true;
@@ -32,14 +36,22 @@ export class GalleryComponent implements OnInit {
   constructor(private _httpClient: HttpClient,
               private _authService: AuthService,
               private _jwtHelper: JwtHelper,
-              private _uploadService: UploadService) {
+              private _uploadService: UploadService,
+              public _sanitizer: DomSanitizer,
+              private _router: Router) {
   }
 
   ngOnInit() {
+    this.isTokenExpired = this._authService.isExpired();
+    console.log(this.isTokenExpired)
+
     this._authService.getUploadedImages().subscribe((data) => {
       this.uploadedImages = data['images'];
     });
-    this.isTokenExpired = this._authService.isExpired();
+
+    this._uploadService.getMovieUrl().subscribe((data) => {
+      this.uploadedMovieUrl = data['url'];
+    })
   }
 
   onFileSelected(event) {
@@ -92,19 +104,31 @@ export class GalleryComponent implements OnInit {
     }
   }
 
-  onMovieSelected(event) {
-    this.movieUrl = event.target.value;
-    console.log(this.movieUrl);
-  }
-
   onMovieUpload() {
-    if(this.movieUrl.length > 0){
-      this._uploadService.onMovieUpload({movieUrl: this.movieUrl}).subscribe((response)=>{
-        console.log(response);
-      })
+    if (this.isTokenExpired) {
+      if (this.movieUrl.length > 0) {
+        this._uploadService.onMovieUpload({movieUrl: this.movieUrl}).subscribe((response) => {
+          console.log(response);
+          this.movieUrl = '';
+
+          this._uploadService.getMovieUrl().subscribe((data) => {
+            this.uploadedMovieUrl = data['url'];
+          })
+        })
+      } else {
+        console.log(`Empty input`);
+      }
     } else {
-      console.log(`Empty input`);
+      console.log(`Expired Token`);
+      this._router.navigate(['/logadmin']);
     }
+  };
+
+  onDeleteMovieUrl(event){
+    console.log();
+    this._uploadService.onMovieDelete({link: event.target.value}).subscribe((response)=>{
+      console.log(response);
+    })
   }
 
   onClick(event) {

@@ -345,7 +345,7 @@ module.exports = "#vid{\r\n\r\n}\r\n"
 /***/ "./src/app/gallery/gallery.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<app-header></app-header>\r\n\r\n<h3>Gallery component</h3>\r\n\r\n<div class=\"container\">\r\n  <h4>Upload images</h4>\r\n  <input type=\"file\"\r\n         (change)=\"onFileSelected($event)\"\r\n         multiple>\r\n  <button type=\"button\" (click)=\"onImageUpload()\">Upload image</button>\r\n</div>\r\n\r\n\r\n<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-xl-4 col-lg-4 col-md-6 col-sm-12\" *ngFor=\"let img of uploadedImages\">\r\n      <img src=\"../../assets/images/gallery/{{img.name}}\" alt=\"{{img.name}}\" class=\"img-fluid\">\r\n      <button class=\"btn btn-danger\" (click)=\"onDeleteImage($event)\" value=\"{{img._id}}\"> Delete {{img.name}}</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<hr>\r\n\r\n<div class=\"container\">\r\n  <h4>Upload movies</h4>\r\n  <input type=\"text\"\r\n         (input)=\"onMovieSelected($event)\">\r\n  <button type=\"button\" (click)=\"onMovieUpload()\">Upload movie</button>\r\n</div>\r\n\r\n\r\n<!--<iframe src=\"https://www.youtube.com/embed/YVkUvmDQ3HY\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>-->\r\n\r\n<app-footer></app-footer>\r\n"
+module.exports = "<app-header></app-header>\r\n\r\n<h3>Gallery component</h3>\r\n\r\n<div class=\"container\">\r\n  <h4>Upload images</h4>\r\n  <input type=\"file\"\r\n         (change)=\"onFileSelected($event)\"\r\n         multiple>\r\n  <button type=\"button\" (click)=\"onImageUpload()\">Upload image</button>\r\n</div>\r\n\r\n\r\n<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-xl-4 col-lg-4 col-md-6 col-sm-12\" *ngFor=\"let img of uploadedImages\">\r\n      <img src=\"../../assets/images/gallery/{{img.name}}\" alt=\"{{img.name}}\" class=\"img-fluid\">\r\n      <button class=\"btn btn-danger\" (click)=\"onDeleteImage($event)\" value=\"{{img._id}}\"> Delete {{img.name}}</button>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<hr>\r\n\r\n<div class=\"container\">\r\n  <h4>Upload movies</h4>\r\n  <input type=\"text\" [(ngModel)]=\"movieUrl\">\r\n  <button type=\"button\" (click)=\"onMovieUpload()\">Upload movie</button>\r\n</div>\r\n\r\n<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"col-xl-4 col-lg-4 col-md-6 col-sm-12\" *ngFor=\"let movieUrl of uploadedMovieUrl\">\r\n      <iframe [src]='_sanitizer.bypassSecurityTrustResourceUrl(movieUrl.name)' frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>\r\n      <button class=\"btn btn-danger\" (click)=\"onDeleteMovieUrl($event)\" value=\"{{movieUrl.name}}\"> Delete </button>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<app-footer></app-footer>\r\n"
 
 /***/ }),
 
@@ -369,17 +369,21 @@ var http_1 = __webpack_require__("./node_modules/@angular/common/esm5/http.js");
 var auth_service_1 = __webpack_require__("./src/app/services/auth.service.ts");
 var jwtHelper_service_1 = __webpack_require__("./src/app/services/jwtHelper.service.ts");
 var upload_service_1 = __webpack_require__("./src/app/services/upload.service.ts");
+var platform_browser_1 = __webpack_require__("./node_modules/@angular/platform-browser/esm5/platform-browser.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
 var GalleryComponent = /** @class */ (function () {
     // @HostListener("window:scroll", []) private onScroll($event:Event):void {
     //   console.log(event);
     //   console.log(window.scrollX);
     //   console.log(window.scrollY);
     // };
-    function GalleryComponent(_httpClient, _authService, _jwtHelper, _uploadService) {
+    function GalleryComponent(_httpClient, _authService, _jwtHelper, _uploadService, _sanitizer, _router) {
         this._httpClient = _httpClient;
         this._authService = _authService;
         this._jwtHelper = _jwtHelper;
         this._uploadService = _uploadService;
+        this._sanitizer = _sanitizer;
+        this._router = _router;
         this.selectedFile = null;
         this.imageFormData = null;
         this.uploadImgBtn = true;
@@ -392,10 +396,14 @@ var GalleryComponent = /** @class */ (function () {
     }
     GalleryComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.isTokenExpired = this._authService.isExpired();
+        console.log(this.isTokenExpired);
         this._authService.getUploadedImages().subscribe(function (data) {
             _this.uploadedImages = data['images'];
         });
-        this.isTokenExpired = this._authService.isExpired();
+        this._uploadService.getMovieUrl().subscribe(function (data) {
+            _this.uploadedMovieUrl = data['url'];
+        });
     };
     GalleryComponent.prototype.onFileSelected = function (event) {
         var files = event.target.files.length;
@@ -446,19 +454,33 @@ var GalleryComponent = /** @class */ (function () {
             });
         }
     };
-    GalleryComponent.prototype.onMovieSelected = function (event) {
-        this.movieUrl = event.target.value;
-        console.log(this.movieUrl);
-    };
     GalleryComponent.prototype.onMovieUpload = function () {
-        if (this.movieUrl.length > 0) {
-            this._uploadService.onMovieUpload({ movieUrl: this.movieUrl }).subscribe(function (response) {
-                console.log(response);
-            });
+        var _this = this;
+        if (this.isTokenExpired) {
+            if (this.movieUrl.length > 0) {
+                this._uploadService.onMovieUpload({ movieUrl: this.movieUrl }).subscribe(function (response) {
+                    console.log(response);
+                    _this.movieUrl = '';
+                    _this._uploadService.getMovieUrl().subscribe(function (data) {
+                        _this.uploadedMovieUrl = data['url'];
+                    });
+                });
+            }
+            else {
+                console.log("Empty input");
+            }
         }
         else {
-            console.log("Empty input");
+            console.log("Expired Token");
+            this._router.navigate(['/logadmin']);
         }
+    };
+    ;
+    GalleryComponent.prototype.onDeleteMovieUrl = function (event) {
+        console.log();
+        this._uploadService.onMovieDelete({ link: event.target.value }).subscribe(function (response) {
+            console.log(response);
+        });
     };
     GalleryComponent.prototype.onClick = function (event) {
         event.controls = false;
@@ -482,7 +504,9 @@ var GalleryComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [http_1.HttpClient,
             auth_service_1.AuthService,
             jwtHelper_service_1.JwtHelper,
-            upload_service_1.UploadService])
+            upload_service_1.UploadService,
+            platform_browser_1.DomSanitizer,
+            router_1.Router])
     ], GalleryComponent);
     return GalleryComponent;
 }());
@@ -984,6 +1008,18 @@ var UploadService = /** @class */ (function () {
         var headers = new http_1.HttpHeaders();
         headers.append('Content-Type', 'application/json');
         return this._httpClient.post(url, data, { headers: headers }).map(function (response) { return response; });
+    };
+    UploadService.prototype.getMovieUrl = function () {
+        var url = '/api-movie/kungfu';
+        var headers = new http_1.HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        return this._httpClient.get(url, { headers: headers }).map(function (response) { return response; });
+    };
+    UploadService.prototype.onMovieDelete = function (data) {
+        var url = '/api-movie/kungfu';
+        var headers = new http_1.HttpHeaders();
+        headers.append('Content-Type', 'application/json');
+        return this._httpClient.put(url, data, { headers: headers }).map(function (response) { return response; });
     };
     UploadService = __decorate([
         core_1.Injectable(),
